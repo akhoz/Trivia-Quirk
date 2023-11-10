@@ -10,7 +10,7 @@ public class Home extends JFrame {
         Font fuente = new Font("Arial", Font.BOLD, 30);
 
         Dimension dim = new Dimension(250, 50);
-        JButton singlePlayer = new JButton("Jugar");c
+        JButton singlePlayer = new JButton("Jugar");
         JButton exit = new JButton("Salir");
         singlePlayer.setPreferredSize(dim);
         exit.setPreferredSize(dim);
