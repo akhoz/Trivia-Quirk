@@ -17,7 +17,10 @@ public class Home extends JFrame {
 
         panelBotones.add(singlePlayer, BorderLayout.CENTER);
 
-
+        singlePlayer.addActionListener(e -> {
+           // new Jugar();
+            System.out.println("Jugar");
+        });
 
         titulo.setFont(fuente);
 
