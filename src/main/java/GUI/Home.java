@@ -10,15 +10,12 @@ public class Home extends JFrame {
         Font fuente = new Font("Arial", Font.BOLD, 30);
 
         Dimension dim = new Dimension(250, 50);
-        JButton singlePlayer = new JButton("Un jugador");
-        JButton multiPlayer = new JButton("Multijugador");
+        JButton singlePlayer = new JButton("Jugar");c
         JButton exit = new JButton("Salir");
         singlePlayer.setPreferredSize(dim);
-        multiPlayer.setPreferredSize(dim);
         exit.setPreferredSize(dim);
 
         panelBotones.add(singlePlayer, BorderLayout.CENTER);
-        panelBotones.add(multiPlayer, BorderLayout.CENTER);
 
 
 
