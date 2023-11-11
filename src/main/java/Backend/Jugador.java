@@ -3,7 +3,7 @@ package Backend;
 import poo.proyecto2.triviaquirk.iJugador;
 public class Jugador implements iJugador{
 
-    private String nombre;
+    private final String nombre;
     private short puntaje;
 
     public Jugador(String nombre){
@@ -18,6 +18,11 @@ public class Jugador implements iJugador{
 
     @Override
     public short obtenerPuntaje() {
+        return this.puntaje;
+    }
+
+    public short aumentarPuntaje(short puntos) {
+        this.puntaje += puntos;
         return this.puntaje;
     }
 }
