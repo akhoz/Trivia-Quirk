@@ -14,7 +14,7 @@ public class Pregunta implements iPregunta{
     private final byte respuestaCorrecta;
 
 
-    public Pregunta(String descripcion, String respuestA, String respuestB, String respuestaC, byte respuestaCorrecta, int numeroPregunta){
+    public Pregunta(int numeroPregunta, String descripcion, String respuestA, String respuestB, String respuestaC, byte respuestaCorrecta){
         this.descripcion = descripcion;
         this.respuestas.add(respuestA);
         this.respuestas.add(respuestB);

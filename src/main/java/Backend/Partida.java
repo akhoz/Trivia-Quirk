@@ -5,13 +5,13 @@ import Backend.Preguntas.Pregunta;
 import java.util.ArrayList;
 public class Partida {
 
-    private final int numeroPartida;
-    public final ArrayList<Pregunta> preguntasRealizadas;
+    private int numeroPartida;
+    private final ArrayList<Integer> preguntasRealizadas;
     private final ArrayList<Jugador> jugadores;
 
     public Partida(int numeroPartida){
         this.numeroPartida = numeroPartida;
-        this.preguntasRealizadas = new ArrayList<Pregunta>();
+        this.preguntasRealizadas = new ArrayList<Integer>();
         this.jugadores = new ArrayList<>();
     }
 
@@ -19,7 +19,7 @@ public class Partida {
         return this.numeroPartida;
     }
 
-    public ArrayList<Pregunta> getPreguntasRealizadas(){
+    public ArrayList<Integer> getPreguntasRealizadas(){
         return this.preguntasRealizadas;
     }
 
@@ -29,10 +29,6 @@ public class Partida {
 
     public void agregarJugador(Jugador jugador){
         this.jugadores.add(jugador);
-    }
-
-    public void agregarPregunta(Pregunta pregunta){
-        this.preguntasRealizadas.add(pregunta);
     }
 
     public String toString(){
