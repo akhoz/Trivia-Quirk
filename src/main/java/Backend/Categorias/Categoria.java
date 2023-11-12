@@ -1,6 +1,6 @@
-package Backend;
+package Backend.Categorias;
 
-import Backend.Excepciones.ExcepcionCategoria;
+import Backend.Partida;
 import Backend.Preguntas.Basket;
 import Backend.Preguntas.Futbol;
 import Backend.Preguntas.Matematica;

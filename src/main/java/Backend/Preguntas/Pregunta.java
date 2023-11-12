@@ -44,60 +44,78 @@ public class Pregunta implements iPregunta{
     }
 
     @Override
-    public byte esCorrecta(byte opcionSeleccionada) throws excepcionRangoMayor, FileNotFoundException {
-        byte puntos = 0;
-        boolean preguntaEnArchivo = false;
-        FileInputStream archivo = new FileInputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
+    public byte esCorrecta(byte opcionElegida) throws excepcionRangoMayor, FileNotFoundException {
+        byte valor = 0;
+        boolean encontrado = false;
+        FileInputStream fileIn = new FileInputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
 
         try {
-            ObjectInputStream in = new ObjectInputStream(archivo);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
             ArrayList<Registro> listaRecuperada = (ArrayList)in.readObject();
             in.close();
-            archivo.close();
-            Iterator iterador = listaRecuperada.iterator();
+            fileIn.close();
+            Iterator var8 = listaRecuperada.iterator();
 
-            while(iterador.hasNext()) {
-                Registro registro = (Registro) iterador.next(); //Esto es para recorrer el archivo
-                if (registro.numeroPregunta == this.numeroPregunta) { //Si la pregunta ya existe en el archivo, se hace la comparación para otorgar puntos
-                    if (this.respuestaCorrecta == opcionSeleccionada) { //Si la respuesta es correcta, se analizan los fallos para dar 1, 2 o 3 puntos
+            while(var8.hasNext()) {
+                Registro registro = (Registro)var8.next();
+                if (registro.numeroPregunta == this.numeroPregunta) {
+                    if (this.respuestaCorrecta == opcionElegida) {
                         ++registro.aciertos;
-                        if (registro.desaciertos + registro.aciertos < 10) { //Si no hay suficiente estadistica, se otorga 1 punto
-                            puntos = 1;
-                        } else if (registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos) < 33) { //Si el porcentaje de fallos es menor a 33%. se otorga 1 punto
-                            puntos = 1;
-                        } else if (registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos) < 66) { //Si el porcentaje de fallos es menor a 66%. se otorga 2 puntos
-                            puntos = 2;
-                        } else { //Si supera el 66% de fallos, se otorgan 3 puntos
-                            puntos = 3;
+                        if (registro.desaciertos + registro.aciertos < 10) {
+                            valor = 1;
+                        } else if (registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos) < 33) {
+                            valor = 1;
+                        } else if (registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos) < 66) {
+                            valor = 2;
+                        } else {
+                            valor = 3;
                         }
                     } else {
                         ++registro.desaciertos;
                     }
 
-                    preguntaEnArchivo = true;
+                    encontrado = true;
                     break;
                 }
             }
-            if (!preguntaEnArchivo) { //Si la pregunta no existe en el archivo, se crea un nuevo registro y se asignan los puntos
-                if (this.respuestaCorrecta == opcionSeleccionada) {
+
+            if (!encontrado) {
+                if (this.respuestaCorrecta == opcionElegida) {
                     listaRecuperada.add(new Registro(this.numeroPregunta, 1, 0));
-                    puntos = 1;
                 } else {
                     listaRecuperada.add(new Registro(this.numeroPregunta, 0, 1));
                 }
-
             }
 
-            //Se guarda la lista en el archivo
             FileOutputStream fileOut = new FileOutputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(listaRecuperada);
             out.close();
             fileOut.close();
-        }  catch (IOException | ClassNotFoundException var10) { //Si hay un error, se imprime el error
-            var10.printStackTrace();
+        } catch (IOException var13) {
+            System.out.println("EError: " + var13.getMessage());
+            FileOutputStream fileOut = new FileOutputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
+
+            try {
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                ArrayList<Registro> nuevaLista = new ArrayList();
+                if (this.respuestaCorrecta == opcionElegida) {
+                    nuevaLista.add(new Registro(this.numeroPregunta, 1, 0));
+                } else {
+                    nuevaLista.add(new Registro(this.numeroPregunta, 0, 1));
+                }
+
+                out.writeObject(nuevaLista);
+            } catch (IOException var12) {
+                System.out.println("No se puede escrinir en el archivo");
+            }
+
+            System.out.println("No se puede abrir el archivo de estadística y se crea uno nuevo");
+        } catch (ClassNotFoundException var14) {
+            System.out.println("La clase RegistroEstadistico no esta disponible");
         }
-        return puntos;
+
+        return valor;
     }
 
     @Override
