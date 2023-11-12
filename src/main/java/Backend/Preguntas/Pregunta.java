@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Preguntas;
 
 import poo.proyecto2.triviaquirk.iPregunta;
 import poo.proyecto2.triviaquirk.excepciones.excepcionRangoMayor;
@@ -7,18 +7,16 @@ import java.util.ArrayList;
 import java.io.FileNotFoundException;
 public class Pregunta implements iPregunta{
     private final String descripcion;
-    private final ArrayList<String> respuestas;
-
+    private final ArrayList<String> respuestas = new ArrayList<>();
     private final byte respuestaCorrecta;
-    private int aciertos;
-    private int fallos;
 
-    public Pregunta(String descripcion, ArrayList<String> respuestas){
+
+    public Pregunta(String descripcion, String respuestA, String respuestB, String respuestaC, byte respuestaCorrecta){
         this.descripcion = descripcion;
-        this.respuestas = respuestas;
-        this.respuestaCorrecta = 0;
-        this.aciertos = 0;
-        this.fallos = 0;
+        this.respuestas.add(respuestA);
+        this.respuestas.add(respuestB);
+        this.respuestas.add(respuestaC);
+        this.respuestaCorrecta = respuestaCorrecta;
     }
 
     @Override
@@ -43,10 +41,7 @@ public class Pregunta implements iPregunta{
 
     @Override
     public byte esCorrecta(byte var1) throws excepcionRangoMayor, FileNotFoundException {
-        //PREGUNTAR
-        if (var1 > 3) {
-            throw new excepcionRangoMayor();
-        }
+        //TO define
         return var1;
     }
 

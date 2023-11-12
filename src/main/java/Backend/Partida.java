@@ -1,5 +1,6 @@
 package Backend;
 
+import Backend.Preguntas.Pregunta;
 
 import java.util.ArrayList;
 public class Partida {
@@ -10,7 +11,7 @@ public class Partida {
 
     public Partida(int numeroPartida){
         this.numeroPartida = numeroPartida;
-        this.preguntasRealizadas = new ArrayList<>();
+        this.preguntasRealizadas = new ArrayList<Pregunta>();
         this.jugadores = new ArrayList<>();
     }
 
