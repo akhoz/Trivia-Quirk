@@ -1,17 +1,21 @@
 package Backend;
 
 import Backend.Preguntas.Pregunta;
+import poo.proyecto2.triviaquirk.iSuscriptorPreguntas;
+import poo.proyecto2.triviaquirk.iJugador;
 
 import java.util.ArrayList;
 public class Partida {
 
     private int numeroPartida;
     private final ArrayList<Integer> preguntasRealizadas;
-    private final ArrayList<Jugador> jugadores;
+    public final ArrayList<iSuscriptorPreguntas> listadoSuscriptores;
+    private final ArrayList<iJugador> jugadores;
 
     public Partida(int numeroPartida){
         this.numeroPartida = numeroPartida;
         this.preguntasRealizadas = new ArrayList<Integer>();
+        this.listadoSuscriptores = new ArrayList<iSuscriptorPreguntas>();
         this.jugadores = new ArrayList<>();
     }
 
@@ -19,11 +23,17 @@ public class Partida {
         return this.numeroPartida;
     }
 
+    public ArrayList<iSuscriptorPreguntas> getListadoSuscriptores() {
+        return this.listadoSuscriptores;
+    }
+    public void addSuscriptor(iSuscriptorPreguntas suscriptor) {
+        this.listadoSuscriptores.add(suscriptor);
+    }
     public ArrayList<Integer> getPreguntasRealizadas(){
         return this.preguntasRealizadas;
     }
 
-    public ArrayList<Jugador> getJugadores(){
+    public ArrayList<iJugador> getJugadores(){
         return this.jugadores;
     }
 

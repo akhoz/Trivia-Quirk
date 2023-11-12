@@ -8,9 +8,12 @@ import Backend.Preguntas.Pregunta;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPartidaNoDisponible;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
 import poo.proyecto2.triviaquirk.iCategorias;
+import poo.proyecto2.triviaquirk.iJugador;
 import poo.proyecto2.triviaquirk.iPregunta;
+import poo.proyecto2.triviaquirk.iSuscriptorPreguntas;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Categoria implements iCategorias {
@@ -30,6 +33,11 @@ public class Categoria implements iCategorias {
             instancia = new Categoria();
         }
         return instancia;
+    }
+
+    @Override
+    public String nombreCategoria() {
+        return this.nombre;
     }
 
     @Override
@@ -136,6 +144,79 @@ public class Categoria implements iCategorias {
                 return preguntaSolicitada;
             }
         }
+    }
+
+    @Override
+    public void publicarEnSuscriptores(int numeroPartida) throws excepcionPartidaNoDisponible {
+        Partida partida = null;
+
+        for(int i = 0; i < this.partidasActivas.size(); ++i) {
+            if (((Partida)this.partidasActivas.get(i)).getNumeroPartida() == numeroPartida) {
+                partida = (Partida)this.partidasActivas.get(i);
+                break;
+            }
+        }
+
+        if (partida == null) {
+            throw new excepcionPartidaNoDisponible("Esta partida ya no existe activa");
+        } else {
+            Iterator var5 = partida.getListadoSuscriptores().iterator();
+
+            while(var5.hasNext()) {
+                iSuscriptorPreguntas suscriptor = (iSuscriptorPreguntas)var5.next();
+                suscriptor.publicarPuntaje(partida.getJugadores());
+            }
+
+        }
+    }
+
+    public void agregarSuscriptor(int numeroPartida, iSuscriptorPreguntas sp) throws excepcionPartidaNoDisponible {
+        Partida partida = null;
+
+        for(int i = 0; i < this.partidasActivas.size(); ++i) {
+            if (((Partida)this.partidasActivas.get(i)).getNumeroPartida() == numeroPartida) {
+                partida = (Partida)this.partidasActivas.get(i);
+                break;
+            }
+        }
+
+        if (partida == null) {
+            throw new excepcionPartidaNoDisponible("Esta partida ya no existe activa");
+        } else {
+            partida.addSuscriptor(sp);
+        }
+    }
+
+    public void agregarJugador(int numeroPartida, iJugador jugador) throws excepcionPartidaNoDisponible {
+        Partida partida = null;
+
+        for(int i = 0; i < this.partidasActivas.size(); ++i) {
+            if (((Partida)this.partidasActivas.get(i)).getNumeroPartida() == numeroPartida) {
+                partida = (Partida)this.partidasActivas.get(i);
+                break;
+            }
+        }
+
+        if (partida == null) {
+            throw new excepcionPartidaNoDisponible("Esta partida ya no existe activa");
+        } else {
+            partida.agregarJugador(jugador);
+        }
+    }
+
+    public short cantidadDePreguntasExistentes() {
+        int numeroDeElementos;
+        if (this.nombre == "Matematica") {
+            Matematica[] elementos = Matematica.values();
+            numeroDeElementos = elementos.length;
+        } else if (this.nombre == "Futbol") {
+            Futbol[] elementos = Futbol.values();
+            numeroDeElementos = elementos.length;
+        } else {
+            Basket[] elementos = Basket.values();
+            numeroDeElementos = elementos.length;
+        }
+        return (short)numeroDeElementos;
     }
 }
 
