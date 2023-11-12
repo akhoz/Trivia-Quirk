@@ -28,9 +28,9 @@ public class Categoria implements iCategorias {
     private Categoria() {
     }
 
-    public static Categoria getInstance() { //Implementacion del patron Singleton
+    public static Categoria getInstance(String nombre) { //Implementacion del patron Singleton
         if (instancia == null) {
-            instancia = new Categoria();
+            instancia = new Categoria(nombre);
         }
         return instancia;
     }
