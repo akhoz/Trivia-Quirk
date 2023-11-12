@@ -37,7 +37,7 @@ public class Partida {
         return this.jugadores;
     }
 
-    public void agregarJugador(Jugador jugador){
+    public void agregarJugador(iJugador jugador){
         this.jugadores.add(jugador);
     }
 
