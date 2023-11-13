@@ -80,6 +80,7 @@ public class Pregunta implements iPregunta{
                     }
 
                     System.out.println(this.descripcion + " respuesta correcta: " + this.respuestaCorrecta);
+                    System.out.println("Estadistica actual de la pregunta, Aciertos: " + registro.aciertos + ", Desaciertos: " + registro.desaciertos);
                     break;
                 }
             }
@@ -94,6 +95,7 @@ public class Pregunta implements iPregunta{
                     System.out.println("Incorrecto (no encontrado)");
                     listaRecuperada.add(new Registro(this.numeroPregunta, 0, 1));
                 }
+                System.out.println("No habia estadistica previa de esta pregunta");
             }
 
             FileOutputStream fileOut = new FileOutputStream("src/main/java/Backend/Preguntas/Data/EstadisticaPreguntas.dat");

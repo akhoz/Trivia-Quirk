@@ -16,10 +16,31 @@ public class Trivia {
     private Partida partida;
     private Timer timer;
     private int segundosRestantes = 20;
+    private int preguntasRestantes = 30;
+    private int indiceJugadores = 0;
+    private int cantidadJugadores;
     private byte puntaje;
     private iPregunta pregunta;
 
+    //Declaracion---------------------------------------------------------------------------------------------------
+    private JLabel preguntaLabel = new JLabel();
+    private JLabel respuestaLabel = new JLabel(); //Utilizar esta como mensaje de bueno o malo (Respuesta correcta, puntos:...) o (La respuesta era: ....)
+    private JLabel tiempoRestanteLabel = new JLabel();
+    private JLabel turnoLabel = new JLabel();
+
+    private JRadioButton respuestaA = new JRadioButton();
+    private JRadioButton respuestaB = new JRadioButton();
+    private JRadioButton respuestaC = new JRadioButton();
+
+    private JButton siguiente = new JButton("Siguiente");
+
+    private JPanel panelRespuestas = new JPanel(new FlowLayout());
+
     public Trivia(Categoria categoria, Partida partida) {
+        this.partida = partida;
+        this.categoria = categoria;
+        this.cantidadJugadores = partida.getJugadores().size();
+
         //Ventana-------------------------------------------------------------------------------------------------------
         JFrame ventana = new JFrame("Trivia Quirk");
         ventana.setSize(1200, 800);
@@ -28,18 +49,6 @@ public class Trivia {
         //Fuentes-------------------------------------------------------------------------------------------------------
         Font fuente = new Font("Arial", Font.BOLD, 15);
         Font fuenteSecundaria = new Font("Arial", Font.PLAIN, 8);
-
-        //Declaracion---------------------------------------------------------------------------------------------------
-        JLabel preguntaLabel = new JLabel();
-        JLabel respuestaLabel = new JLabel(); //Utilizar esta como mensaje de bueno o malo (Respuesta correcta, puntos:...) o (La respuesta era: ....)
-        JLabel tiempoRestanteLabel = new JLabel();
-        JLabel turnoLabel = new JLabel();
-
-        JRadioButton respuestaA = new JRadioButton();
-        JRadioButton respuestaB = new JRadioButton();
-        JRadioButton respuestaC = new JRadioButton();
-
-        JPanel panelRespuestas = new JPanel(new FlowLayout());
 
         //Implementacion------------------------------------------------------------------------------------------------
         turnoLabel.setBounds(10, 10, 600, 30);
@@ -88,6 +97,10 @@ public class Trivia {
         respuestaLabel.setFont(fuente);
         ventana.add(respuestaLabel);
 
+        siguiente.setVisible(false);
+        siguiente.setBounds(10, 727, 100,30);
+        ventana.add(siguiente);
+
         //Acciones------------------------------------------------------------------------------------------------------
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -97,8 +110,8 @@ public class Trivia {
                     tiempoRestanteLabel.setText("Tiempo restante: " + segundosRestantes + " segundos");
                 } else {
                     tiempoRestanteLabel.setText("¡Tiempo agotado!");
-                    // Realizar acciones adicionales cuando se agota el tiempo, por ejemplo, finalizar la trivia.
-                    timer.stop(); // Detener el timer cuando el tiempo se agota.
+                    siguiente.setVisible(true);
+                    timer.stop();
                 }
             }
         });
@@ -110,6 +123,8 @@ public class Trivia {
                 respuestaA.setEnabled(false);
                 respuestaB.setEnabled(false);
                 respuestaC.setEnabled(false);
+                siguiente.setVisible(true);
+                timer.stop();
 
                 byte valorSeleccionado = 1;
                 System.out.println(pregunta.obtenerDescripcion() + " respuesta seleccionada: " + valorSeleccionado);
@@ -143,7 +158,8 @@ public class Trivia {
                 respuestaA.setEnabled(false);
                 respuestaB.setEnabled(false);
                 respuestaC.setEnabled(false);
-
+                siguiente.setVisible(true);
+                timer.stop();
 
                 byte valorSeleccionado = 2;
                 System.out.println(pregunta.obtenerDescripcion() + " respuesta seleccionada: " + valorSeleccionado);
@@ -177,6 +193,8 @@ public class Trivia {
                 respuestaA.setEnabled(false);
                 respuestaB.setEnabled(false);
                 respuestaC.setEnabled(false);
+                siguiente.setVisible(true);
+                timer.stop();
 
 
                 byte valorSeleccionado = 3;
@@ -205,6 +223,13 @@ public class Trivia {
             }
         });
 
+        siguiente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                obtenerYMostrarNuevaPregunta();
+                siguiente.setVisible(false);
+            }
+        });
 
         //Ventana------------------------------------------------------------------------------------------------------
         ventana.setLayout(null);
@@ -212,5 +237,45 @@ public class Trivia {
         ventana.setVisible(true);
         ventana.setResizable(false);
 
+    }
+
+    private void obtenerYMostrarNuevaPregunta() {
+
+        if (preguntasRestantes > 0) {
+            try {
+
+                pregunta = categoria.obtenerPreguntaAleatoria(partida.getNumeroPartida());
+                preguntaLabel.setText(pregunta.obtenerDescripcion());
+                respuestaA.setText(pregunta.obtenerRespuesta1());
+                respuestaB.setText(pregunta.obtenerRespuesta2());
+                respuestaC.setText(pregunta.obtenerRespuesta3());
+                respuestaLabel.setVisible(false);
+
+                segundosRestantes = 20;
+
+                respuestaA.setEnabled(true);
+                respuestaB.setEnabled(true);
+                respuestaC.setEnabled(true);
+
+                timer.restart();
+
+                --preguntasRestantes;
+                System.out.println("Preguntas restantes: " + preguntasRestantes);
+
+                ++indiceJugadores;
+
+                if (indiceJugadores == cantidadJugadores) {
+                    indiceJugadores = 0;
+                }
+
+                turnoLabel.setText("Turno de: " + partida.getNombreJugadores().get(indiceJugadores));
+                System.out.println("Turno de: " + partida.getNombreJugadores().get(indiceJugadores));
+
+
+            } catch (excepcionPreguntasNoDisponibles e) {
+                JOptionPane.showMessageDialog(null, "Se produjo un error al obtener la nueva pregunta");
+                e.printStackTrace();
+            }
+        } //si no hay preguntas...
     }
 }
