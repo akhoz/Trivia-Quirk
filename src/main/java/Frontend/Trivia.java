@@ -31,12 +31,15 @@ public class Trivia {
 
         //Declaracion---------------------------------------------------------------------------------------------------
         JLabel preguntaLabel = new JLabel();
-        JLabel respuestaALabel = new JLabel();
-        JLabel respuestaBLabel = new JLabel();
-        JLabel respuestaCLabel = new JLabel();
         JLabel respuestaLabel = new JLabel(); //Utilizar esta como mensaje de bueno o malo (Respuesta correcta, puntos:...) o (La respuesta era: ....)
         JLabel tiempoRestanteLabel = new JLabel();
         JLabel turnoLabel = new JLabel();
+
+        JRadioButton respuestaA = new JRadioButton();
+        JRadioButton respuestaB = new JRadioButton();
+        JRadioButton respuestaC = new JRadioButton();
+
+        JPanel panelRespuestas = new JPanel(new FlowLayout());
 
         //Implementacion------------------------------------------------------------------------------------------------
         turnoLabel.setBounds(10, 10, 600, 30);
@@ -49,32 +52,36 @@ public class Trivia {
         tiempoRestanteLabel.setText("Tiempo restante: 20 segundos");
         ventana.add(tiempoRestanteLabel);
 
-        preguntaLabel.setBounds(10, 90, 1200, 30);
+        preguntaLabel.setBounds(10, 170, 1200, 30);
         preguntaLabel.setFont(fuente);
 
-        respuestaALabel.setBounds(10, 130, 800, 30);
-        respuestaALabel.setFont(fuente);
+        //respuestaA.setBounds(10, 130, 800, 30);
+        respuestaA.setFont(fuente);
 
-        respuestaBLabel.setBounds(270, 130, 800, 30);
-        respuestaBLabel.setFont(fuente);
+        //respuestaB.setBounds(270, 130, 800, 30);
+        respuestaB.setFont(fuente);
 
-        respuestaCLabel.setBounds(540, 130, 800, 30);
-        respuestaCLabel.setFont(fuente);
+        //respuestaC.setBounds(540, 130, 800, 30);
+        respuestaC.setFont(fuente);
+
         try {
             pregunta = categoria.obtenerPreguntaAleatoria(partida.getNumeroPartida());
             preguntaLabel.setText(pregunta.obtenerDescripcion());
-            respuestaALabel.setText(pregunta.obtenerRespuesta1());
-            respuestaBLabel.setText(pregunta.obtenerRespuesta2());
-            respuestaCLabel.setText(pregunta.obtenerRespuesta3());
+            respuestaA.setText(pregunta.obtenerRespuesta1());
+            respuestaB.setText(pregunta.obtenerRespuesta2());
+            respuestaC.setText(pregunta.obtenerRespuesta3());
 
         } catch (excepcionPreguntasNoDisponibles e) {
             JOptionPane.showMessageDialog(null, "Se produjo un error");
             e.printStackTrace();
         }
         ventana.add(preguntaLabel);
-        ventana.add(respuestaALabel);
-        ventana.add(respuestaBLabel);
-        ventana.add(respuestaCLabel);
+
+        panelRespuestas.setBounds(10, 210, 1100, 50);
+        panelRespuestas.add(respuestaA);
+        panelRespuestas.add(respuestaB);
+        panelRespuestas.add(respuestaC);
+        ventana.add(panelRespuestas);
 
         // Inicialización y configuración del Timer
         timer = new Timer(1000, new ActionListener() {
