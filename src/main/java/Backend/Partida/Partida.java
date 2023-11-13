@@ -36,6 +36,13 @@ public class Partida {
     public ArrayList<iJugador> getJugadores(){
         return this.jugadores;
     }
+    public ArrayList<String> getNombreJugadores(){
+        ArrayList<String> nombreJugadores = new ArrayList<>();
+        for (iJugador jugador : this.jugadores){
+            nombreJugadores.add(jugador.obtenerNombreJugador());
+        }
+        return nombreJugadores;
+    }
 
     public void agregarJugador(iJugador jugador){
         this.jugadores.add(jugador);

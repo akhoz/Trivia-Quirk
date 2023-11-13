@@ -31,7 +31,7 @@ public class Categoria implements iCategorias {
     }
 
     public void setCategoria(String nombre) {
-        if (nombre.equals("Matematica") || nombre.equals("Futbol") || nombre.equals("Basket")) { //Esto asegura que el nombre de la categoria sea valido
+        if (nombre.equals("matematica") || nombre.equals("futbol") || nombre.equals("basket")) { //Esto asegura que el nombre de la categoria sea valido
             this.nombre = nombre;
         } else throw new IllegalArgumentException("La categoria no existe");
     }
@@ -79,10 +79,10 @@ public class Categoria implements iCategorias {
         int numeroDeElementos;
 
         //Aqui se verifica cual categoria es la que se esta jugando
-        if (this.nombre.equals("Matematica")) {
+        if (this.nombre.equals("matematica")) {
             Matematica[] elementos = Matematica.values();
             numeroDeElementos = elementos.length;
-        } else if (this.nombre.equals("Futbol")) {
+        } else if (this.nombre.equals("futbol")) {
             Futbol[] elementos = Futbol.values();
             numeroDeElementos = elementos.length;
         } else {

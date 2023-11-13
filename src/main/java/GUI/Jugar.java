@@ -1,13 +1,20 @@
 package GUI;
 
+import Backend.Partida.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 public class Jugar extends JFrame {
 
     private int cantidad;
+    private ArrayList<String> jugadoresRegistrados = new ArrayList<>();
+    private Partida partida;
+    private Jugador jugadores;
+    private Categoria categoria = Categoria.getInstance();
 
     public Jugar() {
         //Ventana------------------------------------------------------------------------------------------------------
@@ -28,7 +35,7 @@ public class Jugar extends JFrame {
 
         JTextField cantidadJugadores = new JTextField();
         JTextField nombreJugador = new JTextField();
-        JTextField categoria = new JTextField();
+        JTextField categoriaTextField = new JTextField();
 
         JButton confirmar = new JButton("Confirmar");
         JButton registrar = new JButton("Registrar");
@@ -86,11 +93,11 @@ public class Jugar extends JFrame {
         categoriaLabel.setText("Elección de categoria: ");
         ventana.add(categoriaLabel);
 
-        categoria.setVisible(false);
-        categoria.setBounds(190, 170, 100, 30);
-        categoria.setFont(fuenteSecundaria);
-        setPlaceholder(categoria, "Categoria");
-        ventana.add(categoria);
+        categoriaTextField .setVisible(false);
+        categoriaTextField .setBounds(190, 170, 100, 30);
+        categoriaTextField .setFont(fuenteSecundaria);
+        setPlaceholder(categoriaTextField , "Categoria");
+        ventana.add(categoriaTextField );
 
         jugar.setVisible(false);
         jugar.setBounds(300, 170, 100, 30);
@@ -137,7 +144,8 @@ public class Jugar extends JFrame {
                     JOptionPane.showMessageDialog(null, "Ingrese el nombre del jugador");
                 } else {
                     System.out.println("Nombre del jugador: " + input);
-                    //CREAR OBJETO AQUI Y AGREGARLO A LA LISTA DE JUGADORES
+                    jugadoresRegistrados.add(input);
+
                     setPlaceholder(nombreJugador, "Nombre del jugador");
                     --cantidad;
                     jugadoresRestantes.setText("Jugadores restantes: " + cantidad);
@@ -149,22 +157,37 @@ public class Jugar extends JFrame {
 
                         categoriasDisponibles.setVisible(true);
                         categoriaLabel.setVisible(true);
-                        categoria.setVisible(true);
+                        categoriaTextField .setVisible(true);
                         jugar.setVisible(true);
+
+                        int numeroDePartida = categoria.registrarPartida();
+                        System.out.println("Numero de partida: " + numeroDePartida);
+                        partida = new Partida(numeroDePartida);
+
+                        for (String jugador : jugadoresRegistrados) {
+                            jugadores = new Jugador(jugador);
+                            partida.agregarJugador(jugadores);
+                        }
+
+                        System.out.println("Jugadores registrados para la partida " + numeroDePartida + ": " + partida.getNombreJugadores());
+
                     }
                 }
             }
         });
 
         jugar.addActionListener(e -> {
-            String input = categoria.getText();
+            String input = categoriaTextField.getText().toLowerCase();
 
-            if (input.equals("Categoria") || input.equals("")) {
+            if (input.equals("categoria") || input.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese la categoria");
+            } else if (!input.equals("futbol") && !input.equals("basket") && !input.equals("matematica")){
+                JOptionPane.showMessageDialog(null, "Ingrese una categoria válida");
             } else {
-                System.out.println("Categoria: " + input);
-                //CREAR OBJETO AQUI Y AGREGARLO A LA LISTA DE JUGADORES
-                setPlaceholder(categoria, "Categoria");
+                setPlaceholder(categoriaTextField , "Categoria");
+                categoria.setCategoria(input);
+                System.out.println("Categoria seleccionada: " + categoria.nombreCategoria());
+                new Trivia(categoria, partida);
                 ventana.dispose();
             }
         });
