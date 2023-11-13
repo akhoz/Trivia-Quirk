@@ -60,7 +60,7 @@ public class Pregunta implements iPregunta{
                     encontrado = true;
 
                     if (this.respuestaCorrecta == opcionElegida) {
-                        System.out.println("Acierto");
+                        System.out.println("Acierto (encontrado)");
                         ++registro.aciertos;
 
                         int porcentajeCorrecto = registro.aciertos * 100 / (registro.desaciertos + registro.aciertos);
@@ -75,6 +75,7 @@ public class Pregunta implements iPregunta{
                             valor = 3;
                         }
                     } else {
+                        System.out.println("Incorrecto (encontrado)");
                         ++registro.desaciertos;
                     }
 
@@ -84,10 +85,12 @@ public class Pregunta implements iPregunta{
             }
 
             if (!encontrado) {
+                System.out.println("Acierto (no encontrado) ");
                 System.out.println(this.descripcion + " respuesta correcta: " + this.respuestaCorrecta);
                 if (this.respuestaCorrecta == opcionElegida) {
                     listaRecuperada.add(new Registro(this.numeroPregunta, 1, 0));
                 } else {
+                    System.out.println("Incorrecto (no encontrado)");
                     listaRecuperada.add(new Registro(this.numeroPregunta, 0, 1));
                 }
             }

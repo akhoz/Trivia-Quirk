@@ -5,7 +5,7 @@ public enum Matematica {
         PREGUNTA_1("Calcular la derivada de ln(x)", "1/x", "x", "2/x", (byte) 1),
         PREGUNTA_2("Encontrar la antiderivada de dx", "x", "1/x", "x^2", (byte) 1),
         PREGUNTA_3("Calcular el valor de x cuando x - 2 = 3", "5", "2", "3", (byte) 2),
-        PREGUNTA_4("Calcular el límite de (x^2 - 1) / (x - 1) cuando x se aproxima a 1", "0", "2", "Indefinido", (byte) 2),
+        PREGUNTA_4("Calcular el límite de (x^2 - 1) / (x - 1) cuando x se aproxima a 1", "0", "2", "Indefinido", (byte) 3),
         PREGUNTA_5("Encontrar la derivada de 3x^2 - 4x + 2", "6x - 4", "3x^3 - 4x + 2", "2x^2 - 4", (byte) 1),
         PREGUNTA_6("Calcular la antiderivada de 2x + 3", "x^2 + 3x + C", "2x^2 + 3x", "x + 3", (byte) 1),
         PREGUNTA_7("¿Cuánto es 5 + 7?", "10", "12", "14", (byte) 2),
