@@ -7,6 +7,8 @@ import java.awt.event.FocusListener;
 
 public class Jugar extends JFrame {
 
+    private int cantidad;
+
     public Jugar() {
         //Ventana------------------------------------------------------------------------------------------------------
         JFrame ventana = new JFrame("Registrando jugadores");
@@ -20,6 +22,7 @@ public class Jugar extends JFrame {
         //Declaracion---------------------------------------------------------------------------------------------------
         JLabel cantidadJugadoresLabel = new JLabel();
         JLabel nombreJugadorLabel = new JLabel();
+        JLabel jugadoresRestantes = new JLabel();
 
         JTextField cantidadJugadores = new JTextField();
         JTextField nombreJugador = new JTextField();
@@ -28,10 +31,11 @@ public class Jugar extends JFrame {
         JButton registrar = new JButton("Registrar");
         JButton regresar = new JButton("Regresar");
 
+
         //Implementacion------------------------------------------------------------------------------------------------
         cantidadJugadoresLabel.setBounds(10, 10, 200, 30);
         cantidadJugadoresLabel.setFont(fuente);
-        cantidadJugadoresLabel.setText("Cantidad de jugadores");
+        cantidadJugadoresLabel.setText("Cantidad de jugadores: ");
         ventana.add(cantidadJugadoresLabel);
 
         cantidadJugadores.setBounds(190, 10, 100, 30);
@@ -48,7 +52,7 @@ public class Jugar extends JFrame {
         nombreJugadorLabel.setVisible(false);
         nombreJugadorLabel.setBounds(10, 50, 200, 30);
         nombreJugadorLabel.setFont(fuente);
-        nombreJugadorLabel.setText("Nombre del jugador");
+        nombreJugadorLabel.setText("Nombre del jugador: ");
         ventana.add(nombreJugadorLabel);
 
         nombreJugador.setVisible(false);
@@ -61,6 +65,11 @@ public class Jugar extends JFrame {
         registrar.setBounds(300, 50, 100, 30);
         ventana.add(registrar);
 
+        jugadoresRestantes.setVisible(false);
+        jugadoresRestantes.setBounds(10, 90, 200, 30);
+        jugadoresRestantes.setFont(fuente);
+        ventana.add(jugadoresRestantes);
+
         //Acciones------------------------------------------------------------------------------------------------------
         confirmar.addActionListener(e -> {
             String input = cantidadJugadores.getText();
@@ -69,7 +78,7 @@ public class Jugar extends JFrame {
                 JOptionPane.showMessageDialog(null, "Ingrese la cantidad de jugadores");
             } else {
                 try {
-                    int cantidad = Integer.parseInt(input);
+                    cantidad = Integer.parseInt(input);
 
                     if (cantidad <= 0) {
                         JOptionPane.showMessageDialog(null, "Ingrese un valor mayor a 0");
@@ -83,6 +92,8 @@ public class Jugar extends JFrame {
                         nombreJugadorLabel.setVisible(true);
                         nombreJugador.setVisible(true);
                         registrar.setVisible(true);
+                        jugadoresRestantes.setVisible(true);
+                        jugadoresRestantes.setText("Jugadores restantes: " + cantidad);
                     }
 
                 } catch (NumberFormatException ex) {
@@ -94,11 +105,21 @@ public class Jugar extends JFrame {
         registrar.addActionListener(e -> {
             String input = nombreJugador.getText();
 
-            if (input.equals("Nombre del jugador") || input.equals("")) {
-                JOptionPane.showMessageDialog(null, "Ingrese el nombre del jugador");
-            } else {
-                System.out.println("Nombre del jugador: " + input);
-                nombreJugador.setText("");
+            if (cantidad != 0) {
+
+                if (input.equals("Nombre del jugador") || input.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Ingrese el nombre del jugador");
+                } else {
+                    System.out.println("Nombre del jugador: " + input);
+                    setPlaceholder(nombreJugador, "Nombre del jugador");
+                    --cantidad;
+                    jugadoresRestantes.setText("Jugadores restantes: " + cantidad);
+
+                    if (cantidad == 0) {
+                        ventana.dispose();
+                    }
+
+                }
             }
         });
 
