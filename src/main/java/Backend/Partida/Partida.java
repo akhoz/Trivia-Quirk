@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Partida;
 
 import Backend.Preguntas.Pregunta;
 import poo.proyecto2.triviaquirk.iSuscriptorPreguntas;

@@ -1,24 +1,28 @@
 package GUI;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Home extends JFrame {
-    public Home () {
+
+    private static Home instancia; //Singleton
+
+    private Home () {
         JPanel panel = new JPanel(new BorderLayout());
         JPanel panelBotones = new JPanel(new FlowLayout());
         JLabel titulo = new JLabel("Trivia Quirk");
         Font fuente = new Font("Arial", Font.BOLD, 30);
 
         Dimension dim = new Dimension(250, 50);
-        JButton singlePlayer = new JButton("Jugar");
+        JButton jugar = new JButton("Jugar");
         JButton exit = new JButton("Salir");
-        singlePlayer.setPreferredSize(dim);
+        jugar.setPreferredSize(dim);
         exit.setPreferredSize(dim);
 
-        panelBotones.add(singlePlayer, BorderLayout.CENTER);
+        panelBotones.add(jugar, BorderLayout.CENTER);
 
-        singlePlayer.addActionListener(e -> {
-           // new Jugar();
+        jugar.addActionListener(e -> {
+            new Jugar();
             System.out.println("Jugar");
         });
 
@@ -36,6 +40,14 @@ public class Home extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        setResizable(false);
+    }
+
+    public static Home getInstance() { //Implementacion del patron Singleton
+        if (instancia == null) {
+            instancia = new Home();
+        }
+        return instancia;
     }
 
 }

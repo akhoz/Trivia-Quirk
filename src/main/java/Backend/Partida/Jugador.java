@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Partida;
 
 import poo.proyecto2.triviaquirk.iJugador;
 public class Jugador implements iJugador{

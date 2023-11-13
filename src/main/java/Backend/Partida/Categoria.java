@@ -1,6 +1,5 @@
-package Backend.Categorias;
+package Backend.Partida;
 
-import Backend.Partida;
 import Backend.Preguntas.Basket;
 import Backend.Preguntas.Futbol;
 import Backend.Preguntas.Matematica;
@@ -21,18 +20,20 @@ public class Categoria implements iCategorias {
     private final ArrayList<Partida> partidasActivas = new ArrayList();
     private static Categoria instancia;
 
-    private Categoria(String nombre) {
-        this.nombre = nombre;
-    }
-
     private Categoria() {
     }
 
-    public static Categoria getInstance(String nombre) { //Implementacion del patron Singleton
+    public static Categoria getInstance() { //Implementacion del patron Singleton
         if (instancia == null) {
-            instancia = new Categoria(nombre);
+            instancia = new Categoria();
         }
         return instancia;
+    }
+
+    public void setCategoria(String nombre) {
+        if (nombre.equals("Matematica") || nombre.equals("Futbol") || nombre.equals("Basket")) { //Esto asegura que el nombre de la categoria sea valido
+            this.nombre = nombre;
+        } else throw new IllegalArgumentException("La categoria no existe");
     }
 
     @Override
@@ -76,10 +77,12 @@ public class Categoria implements iCategorias {
     @Override
     public iPregunta obtenerPreguntaAleatoria(int numeroPartida) throws excepcionPreguntasNoDisponibles {
         int numeroDeElementos;
-        if (this.nombre == "Matematica") {
+
+        //Aqui se verifica cual categoria es la que se esta jugando
+        if (this.nombre.equals("Matematica")) {
             Matematica[] elementos = Matematica.values();
             numeroDeElementos = elementos.length;
-        } else if (this.nombre == "Futbol") {
+        } else if (this.nombre.equals("Futbol")) {
             Futbol[] elementos = Futbol.values();
             numeroDeElementos = elementos.length;
         } else {

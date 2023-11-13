@@ -1,7 +1,6 @@
 package Backend;
 
-import Backend.Preguntas.Pregunta;
-import poo.proyecto2.triviaquirk.excepciones.excepcionPartidaNoDisponible;
+import Backend.Partida.Categoria;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
 import poo.proyecto2.triviaquirk.iPregunta;
 

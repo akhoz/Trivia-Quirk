@@ -45,6 +45,7 @@ public class Pregunta implements iPregunta{
 
     @Override
     public byte esCorrecta(byte opcionElegida) throws excepcionRangoMayor, FileNotFoundException {
+
         byte valor = 0;
         boolean encontrado = false;
         FileInputStream fileIn = new FileInputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
