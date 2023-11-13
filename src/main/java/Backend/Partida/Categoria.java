@@ -1,9 +1,7 @@
 package Backend.Partida;
 
-import Backend.Preguntas.Basket;
-import Backend.Preguntas.Futbol;
-import Backend.Preguntas.Matematica;
-import Backend.Preguntas.Pregunta;
+import Backend.Preguntas.*;
+import Backend.Preguntas.Data.*;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPartidaNoDisponible;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
 import poo.proyecto2.triviaquirk.iCategorias;
@@ -99,10 +97,10 @@ public class Categoria implements iCategorias {
             }
         }
 
-            assert partida != null; //Si la partida es nula, se lanza una excepcion
+        assert partida != null; //Si la partida es nula, se lanza una excepcion
 
-            //Si el numero de elementos es menor o igual al numero de preguntas realizadas, se lanza una excepcion
-            if (numeroDeElementos <= partida.getPreguntasRealizadas().size()) {
+        //Si el numero de elementos es menor o igual al numero de preguntas realizadas, se lanza una excepcion
+        if (numeroDeElementos <= partida.getPreguntasRealizadas().size()) {
             throw new excepcionPreguntasNoDisponibles();
         } else {
             long semilla = System.currentTimeMillis();
@@ -115,7 +113,7 @@ public class Categoria implements iCategorias {
             partida.getPreguntasRealizadas().add(numeroAleatorio);
 
             //Se obtiene la pregunta aleatoria dependiendo de la categoria
-            if (this.nombre.equals("Matematica")) {
+            if (this.nombre.equals("matematica")) {
                 Matematica[] preguntas = Matematica.values();
                 Matematica preguntaAleatoria = preguntas[numeroAleatorio];
                 String descripcion = preguntaAleatoria.getDescripcion();
@@ -125,7 +123,7 @@ public class Categoria implements iCategorias {
                 byte respuestaCorrecta = preguntaAleatoria.getRespuestaCorrecta();
                 Pregunta preguntaSolicitada = new Pregunta(numeroAleatorio, descripcion, respuestaA, respuestaB, respuestaC, respuestaCorrecta);
                 return preguntaSolicitada;
-            } else if (this.nombre.equals("Futbol")) {
+            } else if (this.nombre.equals("futbol")) {
                 Futbol[] preguntas = Futbol.values();
                 Futbol preguntaAleatoria = preguntas[numeroAleatorio];
                 String descripcion = preguntaAleatoria.getDescripcion();
@@ -209,10 +207,10 @@ public class Categoria implements iCategorias {
 
     public short cantidadDePreguntasExistentes() {
         int numeroDeElementos;
-        if (this.nombre == "Matematica") {
+        if (this.nombre == "matematica") {
             Matematica[] elementos = Matematica.values();
             numeroDeElementos = elementos.length;
-        } else if (this.nombre == "Futbol") {
+        } else if (this.nombre == "futbol") {
             Futbol[] elementos = Futbol.values();
             numeroDeElementos = elementos.length;
         } else {
@@ -222,4 +220,3 @@ public class Categoria implements iCategorias {
         return (short)numeroDeElementos;
     }
 }
-
