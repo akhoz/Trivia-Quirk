@@ -89,6 +89,7 @@ public class Pregunta implements iPregunta{
                 System.out.println(this.descripcion + " respuesta correcta: " + this.respuestaCorrecta);
                 if (this.respuestaCorrecta == opcionElegida) {
                     listaRecuperada.add(new Registro(this.numeroPregunta, 1, 0));
+                    valor = 1;
                 } else {
                     System.out.println("Incorrecto (no encontrado)");
                     listaRecuperada.add(new Registro(this.numeroPregunta, 0, 1));
