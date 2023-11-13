@@ -1,4 +1,4 @@
-package Backend.Partida;
+package Frontend;
 
 import poo.proyecto2.triviaquirk.iJugador;
 import poo.proyecto2.triviaquirk.iSuscriptorPreguntas;

@@ -21,6 +21,7 @@ public class Trivia {
     private int cantidadJugadores;
     private byte puntaje;
     private iPregunta pregunta;
+    private Marcador marcador;
 
     //Declaracion---------------------------------------------------------------------------------------------------
     private JLabel preguntaLabel = new JLabel();
@@ -35,11 +36,14 @@ public class Trivia {
     private JButton siguiente = new JButton("Siguiente");
 
     private JPanel panelRespuestas = new JPanel(new FlowLayout());
+    private ButtonGroup grupoRespuestas = new ButtonGroup();
 
     public Trivia(Categoria categoria, Partida partida) {
         this.partida = partida;
         this.categoria = categoria;
         this.cantidadJugadores = partida.getJugadores().size();
+        marcador = new Marcador();
+        marcador.setVisible(true);
 
         //Ventana-------------------------------------------------------------------------------------------------------
         JFrame ventana = new JFrame("Trivia Quirk");
@@ -90,6 +94,9 @@ public class Trivia {
         panelRespuestas.add(respuestaA);
         panelRespuestas.add(respuestaB);
         panelRespuestas.add(respuestaC);
+        grupoRespuestas.add(respuestaA);
+        grupoRespuestas.add(respuestaB);
+        grupoRespuestas.add(respuestaC);
         ventana.add(panelRespuestas);
 
         respuestaLabel.setVisible(false);
@@ -134,8 +141,10 @@ public class Trivia {
                     System.out.println("Puntos obtenidos: " + puntaje);
 
                     if (puntaje != 0) {
+                        partida.getJugadores().get(indiceJugadores).aumentarPuntaje(puntaje);
                         respuestaLabel.setText("Respuesta correcta, has obtenido " + puntaje + " puntos!");
                         respuestaLabel.setVisible(true);
+                        marcador.publicarPuntaje(partida.getJugadores());
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
 
                     } else {
@@ -169,8 +178,10 @@ public class Trivia {
                     System.out.println("Puntos obtenidos: " + puntaje);
 
                     if (puntaje != 0) {
+                        partida.getJugadores().get(indiceJugadores).aumentarPuntaje(puntaje);
                         respuestaLabel.setText("Respuesta correcta, has obtenido " + puntaje + " puntos!");
                         respuestaLabel.setVisible(true);
+                        marcador.publicarPuntaje(partida.getJugadores());
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
 
                     } else {
@@ -205,8 +216,10 @@ public class Trivia {
                     System.out.println("Puntos obtenidos: " + puntaje);
 
                     if (puntaje != 0) {
+                        partida.getJugadores().get(indiceJugadores).aumentarPuntaje(puntaje);
                         respuestaLabel.setText("Respuesta correcta, has obtenido " + puntaje + " puntos!");
                         respuestaLabel.setVisible(true);
+                        marcador.publicarPuntaje(partida.getJugadores());
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
 
                     } else {
@@ -243,7 +256,6 @@ public class Trivia {
 
         if (preguntasRestantes > 0) {
             try {
-
                 pregunta = categoria.obtenerPreguntaAleatoria(partida.getNumeroPartida());
                 preguntaLabel.setText(pregunta.obtenerDescripcion());
                 respuestaA.setText(pregunta.obtenerRespuesta1());
@@ -252,6 +264,8 @@ public class Trivia {
                 respuestaLabel.setVisible(false);
 
                 segundosRestantes = 20;
+
+                grupoRespuestas.clearSelection();
 
                 respuestaA.setEnabled(true);
                 respuestaB.setEnabled(true);
