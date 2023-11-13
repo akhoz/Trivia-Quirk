@@ -23,6 +23,7 @@ public class Jugador implements iJugador{
 
     public short aumentarPuntaje(short puntos) {
         this.puntaje += puntos;
+        System.out.println("Puntaje actual de " + this.nombre + ": " + puntaje);
         return this.puntaje;
     }
 }
