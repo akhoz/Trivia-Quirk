@@ -1,4 +1,4 @@
-package Backend.Preguntas;
+package Backend.Preguntas.Data;
 
 import java.util.ArrayList;
 

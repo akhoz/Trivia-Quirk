@@ -1,4 +1,4 @@
-package Backend.Preguntas;
+package Backend.Preguntas.Data;
 
 import java.util.ArrayList;
 public enum Matematica {
@@ -8,15 +8,15 @@ public enum Matematica {
         PREGUNTA_4("Calcular el límite de (x^2 - 1) / (x - 1) cuando x se aproxima a 1", "0", "2", "Indefinido", (byte) 2),
         PREGUNTA_5("Encontrar la derivada de 3x^2 - 4x + 2", "6x - 4", "3x^3 - 4x + 2", "2x^2 - 4", (byte) 1),
         PREGUNTA_6("Calcular la antiderivada de 2x + 3", "x^2 + 3x + C", "2x^2 + 3x", "x + 3", (byte) 1),
-        PREGUNTA_7("¿Cuánto es 5 + 7?", "10", "8", "14", (byte) 2),
+        PREGUNTA_7("¿Cuánto es 5 + 7?", "10", "12", "14", (byte) 2),
         PREGUNTA_8("Simplificar la expresión: 2(3x + 4) - (x - 2)", "3x + 6", "x + 2", "6x + 2", (byte) 2),
         PREGUNTA_9("Encontrar la raíz cuadrada de 16", "4", "8", "3", (byte) 1),
-        PREGUNTA_10("Evaluar 3^2", "6", "12", "27", (byte) 2),
-        PREGUNTA_11("Calcular el producto de 4 y 7", "28", "44", "7", (byte) 2),
+        PREGUNTA_10("Evaluar 3^2", "6", "9", "27", (byte) 2),
+        PREGUNTA_11("Calcular el producto de 4 y 7", "28", "44", "7", (byte) 1),
         PREGUNTA_12("Restar 9 de 15", "6", "4", "15", (byte) 1),
         PREGUNTA_13("Encontrar la derivada de sin(x)", "cos(x)", "tan(x)", "csc(x)", (byte) 1),
-        PREGUNTA_14("Calcular la antiderivada de 5x^4", "5x^5 + C", "20x^3 + C", "4x^5 + C", (byte) 2),
-        PREGUNTA_15("¿Cuál es el resultado de 12 dividido por 4?", "8", "4", "12", (byte) 2),
+        PREGUNTA_14("Calcular la antiderivada de 5x^4", "5x^5 + C", "20x^3 + C", "x^5 + C", (byte) 3),
+        PREGUNTA_15("¿Cuál es el resultado de 12 dividido por 4?", "8", "4", "3", (byte) 3),
         PREGUNTA_16("Simplificar: 2x + 3x", "5x", "x^2", "2x^2", (byte) 1),
         PREGUNTA_17("Encontrar el límite de (1/x) cuando x se aproxima a infinito", "0", "Infinito", "Indefinido", (byte) 1),
         PREGUNTA_18("Calcular la derivada de 4x^3 - 2x^2", "12x^2 - 4x", "8x^2 - 2x", "4x^2 - 2x", (byte) 1),
