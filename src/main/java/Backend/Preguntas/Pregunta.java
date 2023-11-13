@@ -13,7 +13,6 @@ public class Pregunta implements iPregunta{
     private final ArrayList<String> respuestas = new ArrayList<>();
     private final byte respuestaCorrecta;
 
-
     public Pregunta(int numeroPregunta, String descripcion, String respuestA, String respuestB, String respuestaC, byte respuestaCorrecta){
         this.descripcion = descripcion;
         this.respuestas.add(respuestA);
@@ -45,28 +44,32 @@ public class Pregunta implements iPregunta{
 
     @Override
     public byte esCorrecta(byte opcionElegida) throws excepcionRangoMayor, FileNotFoundException {
-
         byte valor = 0;
         boolean encontrado = false;
-        FileInputStream fileIn = new FileInputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
+
+        FileInputStream fileIn = new FileInputStream("src/main/java/Backend/Preguntas/Data/EstadisticaPreguntas.dat");
 
         try {
             ObjectInputStream in = new ObjectInputStream(fileIn);
             ArrayList<Registro> listaRecuperada = (ArrayList)in.readObject();
             in.close();
             fileIn.close();
-            Iterator var8 = listaRecuperada.iterator();
 
-            while(var8.hasNext()) {
-                Registro registro = (Registro)var8.next();
+            for (Registro registro : listaRecuperada) {
                 if (registro.numeroPregunta == this.numeroPregunta) {
+                    encontrado = true;
+
                     if (this.respuestaCorrecta == opcionElegida) {
+                        System.out.println("Acierto");
                         ++registro.aciertos;
-                        if (registro.desaciertos + registro.aciertos < 10) {
+
+                        int porcentajeCorrecto = registro.aciertos * 100 / (registro.desaciertos + registro.aciertos);
+
+                        if (registro.aciertos + registro.desaciertos < 10) {
                             valor = 1;
-                        } else if (registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos) < 33) {
+                        } else if (porcentajeCorrecto < 33) {
                             valor = 1;
-                        } else if (registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos) < 66) {
+                        } else if (porcentajeCorrecto < 66) {
                             valor = 2;
                         } else {
                             valor = 3;
@@ -75,12 +78,13 @@ public class Pregunta implements iPregunta{
                         ++registro.desaciertos;
                     }
 
-                    encontrado = true;
+                    System.out.println(this.descripcion + " respuesta correcta: " + this.respuestaCorrecta);
                     break;
                 }
             }
 
             if (!encontrado) {
+                System.out.println(this.descripcion + " respuesta correcta: " + this.respuestaCorrecta);
                 if (this.respuestaCorrecta == opcionElegida) {
                     listaRecuperada.add(new Registro(this.numeroPregunta, 1, 0));
                 } else {
@@ -88,36 +92,22 @@ public class Pregunta implements iPregunta{
                 }
             }
 
-            FileOutputStream fileOut = new FileOutputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
+            FileOutputStream fileOut = new FileOutputStream("src/main/java/Backend/Preguntas/Data/EstadisticaPreguntas.dat");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(listaRecuperada);
             out.close();
             fileOut.close();
         } catch (IOException var13) {
-            System.out.println("EError: " + var13.getMessage());
-            FileOutputStream fileOut = new FileOutputStream("src/main/java/Backend/Preguntas/EstadisticaPreguntas.dat");
-
-            try {
-                ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                ArrayList<Registro> nuevaLista = new ArrayList();
-                if (this.respuestaCorrecta == opcionElegida) {
-                    nuevaLista.add(new Registro(this.numeroPregunta, 1, 0));
-                } else {
-                    nuevaLista.add(new Registro(this.numeroPregunta, 0, 1));
-                }
-
-                out.writeObject(nuevaLista);
-            } catch (IOException var12) {
-                System.out.println("No se puede escrinir en el archivo");
-            }
-
-            System.out.println("No se puede abrir el archivo de estadística y se crea uno nuevo");
+            System.out.println("Error: " + var13.getMessage());
+            // Manejar el error adecuadamente
         } catch (ClassNotFoundException var14) {
-            System.out.println("La clase RegistroEstadistico no esta disponible");
+            System.out.println("La clase RegistroEstadistico no está disponible");
+            // Manejar el error adecuadamente
         }
 
         return valor;
     }
+
 
     @Override
     public void falloPorTiempoRespuesta(byte opcionElegida) throws excepcionRangoMayor, FileNotFoundException {
