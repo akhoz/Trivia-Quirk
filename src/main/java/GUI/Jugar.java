@@ -23,13 +23,17 @@ public class Jugar extends JFrame {
         JLabel cantidadJugadoresLabel = new JLabel();
         JLabel nombreJugadorLabel = new JLabel();
         JLabel jugadoresRestantes = new JLabel();
+        JLabel categoriasDisponibles = new JLabel();
+        JLabel categoriaLabel = new JLabel();
 
         JTextField cantidadJugadores = new JTextField();
         JTextField nombreJugador = new JTextField();
+        JTextField categoria = new JTextField();
 
         JButton confirmar = new JButton("Confirmar");
         JButton registrar = new JButton("Registrar");
         JButton regresar = new JButton("Regresar");
+        JButton jugar = new JButton("Jugar");
 
 
         //Implementacion------------------------------------------------------------------------------------------------
@@ -70,6 +74,28 @@ public class Jugar extends JFrame {
         jugadoresRestantes.setFont(fuente);
         ventana.add(jugadoresRestantes);
 
+        categoriasDisponibles.setVisible(false);
+        categoriasDisponibles.setBounds(10, 130, 600, 30);
+        categoriasDisponibles.setFont(fuente);
+        categoriasDisponibles.setText("Categorias disponibles: Futbol, Basket, Matematica");
+        ventana.add(categoriasDisponibles);
+
+        categoriaLabel.setVisible(false);
+        categoriaLabel.setBounds(10, 170, 200, 30);
+        categoriaLabel.setFont(fuente);
+        categoriaLabel.setText("Elección de categoria: ");
+        ventana.add(categoriaLabel);
+
+        categoria.setVisible(false);
+        categoria.setBounds(190, 170, 100, 30);
+        categoria.setFont(fuenteSecundaria);
+        setPlaceholder(categoria, "Categoria");
+        ventana.add(categoria);
+
+        jugar.setVisible(false);
+        jugar.setBounds(300, 170, 100, 30);
+        ventana.add(jugar);
+
         //Acciones------------------------------------------------------------------------------------------------------
         confirmar.addActionListener(e -> {
             String input = cantidadJugadores.getText();
@@ -85,8 +111,8 @@ public class Jugar extends JFrame {
                     } else {
                         System.out.println("Cantidad de jugadores: " + cantidad);
 
-                        cantidadJugadoresLabel.setFocusable(false);
                         cantidadJugadores.setFocusable(false);
+                        setPlaceholder(cantidadJugadores, "Cantidad de jugadores");
                         confirmar.setEnabled(false);
 
                         nombreJugadorLabel.setVisible(true);
@@ -111,15 +137,35 @@ public class Jugar extends JFrame {
                     JOptionPane.showMessageDialog(null, "Ingrese el nombre del jugador");
                 } else {
                     System.out.println("Nombre del jugador: " + input);
+                    //CREAR OBJETO AQUI Y AGREGARLO A LA LISTA DE JUGADORES
                     setPlaceholder(nombreJugador, "Nombre del jugador");
                     --cantidad;
                     jugadoresRestantes.setText("Jugadores restantes: " + cantidad);
 
                     if (cantidad == 0) {
-                        ventana.dispose();
-                    }
+                        nombreJugadorLabel.setFocusable(false);
+                        nombreJugador.setFocusable(false);
+                        registrar.setEnabled(false);
 
+                        categoriasDisponibles.setVisible(true);
+                        categoriaLabel.setVisible(true);
+                        categoria.setVisible(true);
+                        jugar.setVisible(true);
+                    }
                 }
+            }
+        });
+
+        jugar.addActionListener(e -> {
+            String input = categoria.getText();
+
+            if (input.equals("Categoria") || input.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese la categoria");
+            } else {
+                System.out.println("Categoria: " + input);
+                //CREAR OBJETO AQUI Y AGREGARLO A LA LISTA DE JUGADORES
+                setPlaceholder(categoria, "Categoria");
+                ventana.dispose();
             }
         });
 
