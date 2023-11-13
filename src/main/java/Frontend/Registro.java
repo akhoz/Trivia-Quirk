@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Registro extends JFrame {
 
     private int cantidad;
+    private int numeroDePartida;
     private ArrayList<String> jugadoresRegistrados = new ArrayList<>();
     private Partida partida;
     private Jugador jugadores;
@@ -160,7 +161,7 @@ public class Registro extends JFrame {
                         categoriaTextField .setVisible(true);
                         jugar.setVisible(true);
 
-                        int numeroDePartida = categoria.registrarPartida();
+                        numeroDePartida = categoria.registrarPartida();
                         System.out.println("Numero de partida: " + numeroDePartida);
                         partida = new Partida(numeroDePartida);
 
