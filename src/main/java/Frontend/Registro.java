@@ -85,7 +85,7 @@ public class Registro extends JFrame {
         categoriasDisponibles.setVisible(false);
         categoriasDisponibles.setBounds(10, 130, 600, 30);
         categoriasDisponibles.setFont(fuente);
-        categoriasDisponibles.setText("Categorias disponibles: Futbol, Basket, Matematica");
+        categoriasDisponibles.setText("Categorias disponibles: Futbol, Basket, Matematica, Videojuegos");
         ventana.add(categoriasDisponibles);
 
         categoriaLabel.setVisible(false);
@@ -182,7 +182,7 @@ public class Registro extends JFrame {
 
             if (input.equals("categoria") || input.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese la categoria");
-            } else if (!input.equals("futbol") && !input.equals("basket") && !input.equals("matematica")){
+            } else if (!input.equals("futbol") && !input.equals("basket") && !input.equals("matematica") && !input.equals("videojuegos")){
                 JOptionPane.showMessageDialog(null, "Ingrese una categoria válida");
             } else {
                 setPlaceholder(categoriaTextField , "Categoria");

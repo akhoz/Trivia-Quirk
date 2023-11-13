@@ -29,7 +29,7 @@ public class Categoria implements iCategorias {
     }
 
     public void setCategoria(String nombre) {
-        if (nombre.equals("matematica") || nombre.equals("futbol") || nombre.equals("basket")) { //Esto asegura que el nombre de la categoria sea valido
+        if (nombre.equals("matematica") || nombre.equals("futbol") || nombre.equals("basket") || nombre.equals("videojuegos")) { //Esto asegura que el nombre de la categoria sea valido
             this.nombre = nombre;
         } else throw new IllegalArgumentException("La categoria no existe");
     }
@@ -83,8 +83,11 @@ public class Categoria implements iCategorias {
         } else if (this.nombre.equals("futbol")) {
             Futbol[] elementos = Futbol.values();
             numeroDeElementos = elementos.length;
-        } else {
+        } else if (this.nombre.equals("basket")){
             Basket[] elementos = Basket.values();
+            numeroDeElementos = elementos.length;
+        } else {
+            TriviaPreguntasVideojuegos[] elementos = TriviaPreguntasVideojuegos.values();
             numeroDeElementos = elementos.length;
         }
 
@@ -133,10 +136,20 @@ public class Categoria implements iCategorias {
                 byte respuestaCorrecta = preguntaAleatoria.getRespuestaCorrecta();
                 Pregunta preguntaSolicitada = new Pregunta(numeroAleatorio, descripcion, respuestaA, respuestaB, respuestaC, respuestaCorrecta);
                 return preguntaSolicitada;
-            } else {
+            } else if (this.nombre.equals("basket")) {
                 Basket[] preguntas = Basket.values();
                 Basket preguntaAleatoria = preguntas[numeroAleatorio];
                 String descripcion = preguntaAleatoria.getDescripcion();
+                String respuestaA = preguntaAleatoria.getRespuestaA();
+                String respuestaB = preguntaAleatoria.getRespuestaB();
+                String respuestaC = preguntaAleatoria.getRespuestaC();
+                byte respuestaCorrecta = preguntaAleatoria.getRespuestaCorrecta();
+                Pregunta preguntaSolicitada = new Pregunta(numeroAleatorio, descripcion, respuestaA, respuestaB, respuestaC, respuestaCorrecta);
+                return preguntaSolicitada;
+            } else {
+                TriviaPreguntasVideojuegos[] preguntas = TriviaPreguntasVideojuegos.values();
+                TriviaPreguntasVideojuegos preguntaAleatoria = preguntas[numeroAleatorio];
+                String descripcion = preguntaAleatoria.getPregunta();
                 String respuestaA = preguntaAleatoria.getRespuestaA();
                 String respuestaB = preguntaAleatoria.getRespuestaB();
                 String respuestaC = preguntaAleatoria.getRespuestaC();
