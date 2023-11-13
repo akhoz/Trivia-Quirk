@@ -61,7 +61,52 @@ public class Jugar extends JFrame {
         registrar.setBounds(300, 50, 100, 30);
         ventana.add(registrar);
 
+        //Acciones------------------------------------------------------------------------------------------------------
+        confirmar.addActionListener(e -> {
+            String input = cantidadJugadores.getText();
 
+            if (input.equals("Cantidad de jugadores") || input.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese la cantidad de jugadores");
+            } else {
+                try {
+                    int cantidad = Integer.parseInt(input);
+
+                    if (cantidad <= 0) {
+                        JOptionPane.showMessageDialog(null, "Ingrese un valor mayor a 0");
+                    } else {
+                        System.out.println("Cantidad de jugadores: " + cantidad);
+
+                        cantidadJugadoresLabel.setFocusable(false);
+                        cantidadJugadores.setFocusable(false);
+                        confirmar.setEnabled(false);
+
+                        nombreJugadorLabel.setVisible(true);
+                        nombreJugador.setVisible(true);
+                        registrar.setVisible(true);
+                    }
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido");
+                }
+            }
+        });
+
+        registrar.addActionListener(e -> {
+            String input = nombreJugador.getText();
+
+            if (input.equals("Nombre del jugador") || input.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese el nombre del jugador");
+            } else {
+                System.out.println("Nombre del jugador: " + input);
+                nombreJugador.setText("");
+            }
+        });
+
+        regresar.addActionListener(e -> {
+            System.out.println("Regresando a la ventana principal");
+            ventana.dispose();
+            Home.getInstance();
+        });
 
 
         //Ventana------------------------------------------------------------------------------------------------------
