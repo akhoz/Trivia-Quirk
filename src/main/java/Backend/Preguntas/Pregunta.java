@@ -63,13 +63,13 @@ public class Pregunta implements iPregunta{
                         System.out.println("Acierto (encontrado)");
                         ++registro.aciertos;
 
-                        int porcentajeCorrecto = registro.aciertos * 100 / (registro.desaciertos + registro.aciertos);
+                        int porcentajeIncorrecto = registro.desaciertos * 100 / (registro.desaciertos + registro.aciertos);
 
                         if (registro.aciertos + registro.desaciertos < 10) {
                             valor = 1;
-                        } else if (porcentajeCorrecto < 33) {
+                        } else if (porcentajeIncorrecto < 33) {
                             valor = 1;
-                        } else if (porcentajeCorrecto < 66) {
+                        } else if (porcentajeIncorrecto < 66) {
                             valor = 2;
                         } else {
                             valor = 3;

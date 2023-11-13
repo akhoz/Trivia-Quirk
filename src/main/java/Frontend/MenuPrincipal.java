@@ -35,6 +35,10 @@ public class MenuPrincipal extends JFrame {
         add(exit, BorderLayout.SOUTH);
         add(panel);
 
+        exit.addActionListener(e -> {
+            this.dispose();
+        });
+
         setTitle("Trivia Quirk");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
