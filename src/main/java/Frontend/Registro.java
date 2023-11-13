@@ -8,7 +8,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
-public class Jugar extends JFrame {
+public class Registro extends JFrame {
 
     private int cantidad;
     private ArrayList<String> jugadoresRegistrados = new ArrayList<>();
@@ -16,7 +16,7 @@ public class Jugar extends JFrame {
     private Jugador jugadores;
     private Categoria categoria = Categoria.getInstance();
 
-    public Jugar() {
+    public Registro() {
         //Ventana------------------------------------------------------------------------------------------------------
         JFrame ventana = new JFrame("Registrando jugadores");
         ventana.setSize(600, 300);
@@ -195,7 +195,7 @@ public class Jugar extends JFrame {
         regresar.addActionListener(e -> {
             System.out.println("Regresando a la ventana principal");
             ventana.dispose();
-            Home.getInstance();
+            MenuPrincipal.getInstance();
         });
 
 

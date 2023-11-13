@@ -1,4 +1,4 @@
-import Frontend.Home;
+import Frontend.MenuPrincipal;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
 import poo.proyecto2.triviaquirk.excepciones.excepcionRangoMayor;
 
@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 public class Main {
     public static void main(String[] args) throws excepcionRangoMayor, FileNotFoundException, excepcionPreguntasNoDisponibles {
         byte respuestaUsuario = 1;
-        Home.getInstance();
+        MenuPrincipal.getInstance();
         /*
         Categoria categoria = Categoria.getInstance();
         categoria.setCategoria("Matematica");

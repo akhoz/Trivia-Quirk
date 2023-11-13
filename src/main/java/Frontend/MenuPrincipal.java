@@ -3,11 +3,11 @@ package Frontend;
 import javax.swing.*;
 import java.awt.*;
 
-public class Home extends JFrame {
+public class MenuPrincipal extends JFrame {
 
-    private static Home instancia; //Singleton
+    private static MenuPrincipal instancia; //Singleton
 
-    private Home () {
+    private MenuPrincipal() {
         JPanel panel = new JPanel(new BorderLayout());
         JPanel panelBotones = new JPanel(new FlowLayout());
         JLabel titulo = new JLabel("Trivia Quirk");
@@ -22,7 +22,7 @@ public class Home extends JFrame {
         panelBotones.add(jugar, BorderLayout.CENTER);
 
         jugar.addActionListener(e -> {
-            new Jugar();
+            new Registro();
             System.out.println("Jugar");
         });
 
@@ -43,9 +43,9 @@ public class Home extends JFrame {
         setResizable(false);
     }
 
-    public static Home getInstance() { //Implementacion del patron Singleton
+    public static MenuPrincipal getInstance() { //Implementacion del patron Singleton
         if (instancia == null) {
-            instancia = new Home();
+            instancia = new MenuPrincipal();
         }
         return instancia;
     }
