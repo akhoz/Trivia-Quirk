@@ -31,7 +31,8 @@ public enum Basket {
     PREGUNTA_26("¿Cuál es el término para una violación en baloncesto donde un jugador da un número excesivo de pasos sin botar el balón?", "Doble dribble", "Pasos", "Palmada", (byte) 2),
     PREGUNTA_27("¿Qué jugador de la NBA es conocido por su increíble capacidad atlética y clavadas espectaculares y jugó para el Orlando Magic y los Los Angeles Lakers?", "Kareem Abdul-Jabbar", "Dwight Howard", "Tim Duncan", (byte) 2),
     PREGUNTA_28("¿Quién es conocido por su increíble habilidad para anotar y a menudo se le llama 'La Durantula'?", "LeBron James", "Kobe Bryant", "Stephen Curry", (byte) 3),
-    PREGUNTA_29("¿Qué equipo de la NBA es a menudo llamado los 'Dubs' y es conocido por su pareja de tiradores conocida como los 'Splash Brothers'?", "Los Angeles Lakers", "Golden State Warriors", "Miami Heat", (byte) 3);
+    PREGUNTA_29("¿Qué equipo de la NBA es a menudo llamado los 'Dubs' y es conocido por su pareja de tiradores conocida como los 'Splash Brothers'?", "Los Angeles Lakers", "Golden State Warriors", "Miami Heat", (byte) 3),
+    PREGUNTA_30("¿Qué pasa si patea una pelota en baloncesto?", "No pasa nada", "Se considera falta", "Se acaba el juego", (byte) 2);
 
     private final String descripcion;
     private final ArrayList<String> respuestas = new ArrayList<>();
