@@ -1,6 +1,7 @@
 package Frontend;
 
 import Backend.Partida.*;
+import poo.proyecto2.triviaquirk.excepciones.excepcionPartidaNoDisponible;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
 import poo.proyecto2.triviaquirk.excepciones.excepcionRangoMayor;
 import poo.proyecto2.triviaquirk.iJugador;
@@ -260,6 +261,11 @@ public class Trivia {
             public void actionPerformed(ActionEvent e) {
                 if (preguntasRestantes == 1) {
                     mostrarGanador();
+                    try {
+                        categoria.finalizarPartida(partida.getNumeroPartida());
+                    } catch (excepcionPartidaNoDisponible ex) {
+                        throw new RuntimeException(ex);
+                    }
                     MenuPrincipal.getInstance().setVisible(true);
                     ventana.dispose();
                 }
