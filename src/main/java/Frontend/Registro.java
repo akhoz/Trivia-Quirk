@@ -1,6 +1,7 @@
 package Frontend;
 
 import Backend.Partida.*;
+import Backend.Partida.Categoria;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,9 +41,8 @@ public class Registro extends JFrame {
 
         JButton confirmar = new JButton("Confirmar");
         JButton registrar = new JButton("Registrar");
-        JButton regresar = new JButton("Regresar");
         JButton jugar = new JButton("Jugar");
-
+        JButton regresar = new JButton("Regresar");
 
         //Implementacion------------------------------------------------------------------------------------------------
         cantidadJugadoresLabel.setBounds(10, 10, 200, 30);

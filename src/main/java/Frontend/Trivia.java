@@ -2,21 +2,21 @@ package Frontend;
 
 import Backend.Partida.*;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
+import poo.proyecto2.triviaquirk.excepciones.excepcionRangoMayor;
 import poo.proyecto2.triviaquirk.iPregunta;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
 public class Trivia {
     private Categoria categoria;
     private Partida partida;
     private Timer timer;
     private int segundosRestantes = 20;
+    private byte puntaje;
     private iPregunta pregunta;
 
     public Trivia(Categoria categoria, Partida partida) {
@@ -83,7 +83,12 @@ public class Trivia {
         panelRespuestas.add(respuestaC);
         ventana.add(panelRespuestas);
 
-        // Inicialización y configuración del Timer
+        respuestaLabel.setVisible(false);
+        respuestaLabel.setBounds(10, 300, 400, 30);
+        respuestaLabel.setFont(fuente);
+        ventana.add(respuestaLabel);
+
+        //Acciones------------------------------------------------------------------------------------------------------
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 segundosRestantes--;
@@ -99,10 +104,113 @@ public class Trivia {
         });
         timer.start();
 
+        respuestaA.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                respuestaA.setEnabled(false);
+                respuestaB.setEnabled(false);
+                respuestaC.setEnabled(false);
+
+                byte valorSeleccionado = 1;
+                System.out.println(pregunta.obtenerDescripcion() + " respuesta seleccionada: " + valorSeleccionado);
+
+                try {
+                    puntaje = pregunta.esCorrecta(valorSeleccionado);
+                    System.out.println("Puntos obtenidos: " + puntaje);
+
+                    if (puntaje != 0) {
+                        respuestaLabel.setText("Respuesta correcta, has obtenido " + puntaje + " puntos!");
+                        respuestaLabel.setVisible(true);
+                        //VOLVER A OBTENER PREGUNTA ALEATORIA
+
+                    } else {
+                        respuestaLabel.setText("Respuesta incorrecta");
+                        respuestaLabel.setVisible(true);
+                        //VOLVER A OBTENER PREGUNTA ALEATORIA
+                    }
+
+                } catch (excepcionRangoMayor e1) {
+                    e1.printStackTrace();
+                } catch (FileNotFoundException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        });
+
+        respuestaB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                respuestaA.setEnabled(false);
+                respuestaB.setEnabled(false);
+                respuestaC.setEnabled(false);
+
+
+                byte valorSeleccionado = 2;
+                System.out.println(pregunta.obtenerDescripcion() + " respuesta seleccionada: " + valorSeleccionado);
+
+                try {
+                    puntaje = pregunta.esCorrecta(valorSeleccionado);
+                    System.out.println("Puntos obtenidos: " + puntaje);
+
+                    if (puntaje != 0) {
+                        respuestaLabel.setText("Respuesta correcta, has obtenido " + puntaje + " puntos!");
+                        respuestaLabel.setVisible(true);
+                        //VOLVER A OBTENER PREGUNTA ALEATORIA
+
+                    } else {
+                        respuestaLabel.setText("Respuesta incorrecta");
+                        respuestaLabel.setVisible(true);
+                        //VOLVER A OBTENER PREGUNTA ALEATORIA
+                    }
+
+                } catch (excepcionRangoMayor e1) {
+                    e1.printStackTrace();
+                } catch (FileNotFoundException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        });
+
+        respuestaC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                respuestaA.setEnabled(false);
+                respuestaB.setEnabled(false);
+                respuestaC.setEnabled(false);
+
+
+                byte valorSeleccionado = 3;
+                System.out.println(pregunta.obtenerDescripcion() + " respuesta seleccionada: " + valorSeleccionado);
+
+                try {
+                    puntaje = pregunta.esCorrecta(valorSeleccionado);
+                    System.out.println("Puntos obtenidos: " + puntaje);
+
+                    if (puntaje != 0) {
+                        respuestaLabel.setText("Respuesta correcta, has obtenido " + puntaje + " puntos!");
+                        respuestaLabel.setVisible(true);
+                        //VOLVER A OBTENER PREGUNTA ALEATORIA
+
+                    } else {
+                        respuestaLabel.setText("Respuesta incorrecta");
+                        respuestaLabel.setVisible(true);
+                        //VOLVER A OBTENER PREGUNTA ALEATORIA
+                    }
+
+                } catch (excepcionRangoMayor e1) {
+                    e1.printStackTrace();
+                } catch (FileNotFoundException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        });
+
+
         //Ventana------------------------------------------------------------------------------------------------------
         ventana.setLayout(null);
         ventana.setLocationRelativeTo(null);
         ventana.setVisible(true);
         ventana.setResizable(false);
+
     }
 }
