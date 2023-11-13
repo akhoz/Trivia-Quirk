@@ -1,13 +1,8 @@
-import Backend.Partida.Categoria;
-import GUI.Home;
-import poo.proyecto2.triviaquirk.*;
+import Frontend.Home;
 import poo.proyecto2.triviaquirk.excepciones.excepcionPreguntasNoDisponibles;
 import poo.proyecto2.triviaquirk.excepciones.excepcionRangoMayor;
 
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws excepcionRangoMayor, FileNotFoundException, excepcionPreguntasNoDisponibles {
