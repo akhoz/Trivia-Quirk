@@ -294,7 +294,7 @@ public class Trivia {
                     throw new RuntimeException(ex);
                 }
                 MenuPrincipal.getInstance().setVisible(true);
-                //ventana.dispose();
+                ventana.dispose();
             }
         });
 
@@ -372,12 +372,10 @@ public class Trivia {
 
         if (ganador == null) {
             JOptionPane.showMessageDialog(null, "¡Hubo un empate!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            return;
         }
 
         JOptionPane.showMessageDialog(null, "¡El ganador es: " + ganador.obtenerNombreJugador() +
                 " con un puntaje de " + puntajeMaximo + "!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
-
-        System.exit(0);
     }
 }
