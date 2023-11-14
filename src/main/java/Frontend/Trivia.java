@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Trivia {
     private Categoria categoria;
+    private String nombreCategoria;
     private Partida partida;
     private Timer timer;
     private int segundosRestantes = 20;
@@ -46,6 +47,7 @@ public class Trivia {
         this.partida = partida;
         this.categoria = categoria;
         this.cantidadJugadores = partida.getJugadores().size();
+        this.nombreCategoria = categoria.nombreCategoria();
 
         marcadorTextArea = new JTextArea();
         marcadorTextArea.setEditable(false);
@@ -120,7 +122,7 @@ public class Trivia {
         siguiente.setVisible(false);
         terminar.setVisible(false);
         siguiente.setBounds(10, 727, 100,30);
-        terminar.setBounds(230, 727, 100,30);
+        terminar.setBounds(140, 727, 100,30);
         ventana.add(siguiente);
         ventana.add(terminar);
 
@@ -276,6 +278,7 @@ public class Trivia {
                     MenuPrincipal.getInstance().setVisible(true);
                     //ventana.dispose();
                 }
+                categoria.setCategoria(nombreCategoria);
                 obtenerYMostrarNuevaPregunta();
                 siguiente.setVisible(false);
             }
@@ -362,7 +365,14 @@ public class Trivia {
             if (jugador.obtenerPuntaje() > puntajeMaximo) {
                 puntajeMaximo = jugador.obtenerPuntaje();
                 ganador = jugador;
+            } else if (jugador.obtenerPuntaje() == puntajeMaximo) {
+                ganador = null;
             }
+        }
+
+        if (ganador == null) {
+            JOptionPane.showMessageDialog(null, "¡Hubo un empate!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         }
 
         JOptionPane.showMessageDialog(null, "¡El ganador es: " + ganador.obtenerNombreJugador() +
