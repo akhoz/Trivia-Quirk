@@ -40,6 +40,7 @@ public class Trivia {
 
     private JPanel panelRespuestas = new JPanel(new FlowLayout());
     private ButtonGroup grupoRespuestas = new ButtonGroup();
+    private JButton terminar = new JButton("Terminar");
 
     public Trivia(Categoria categoria, Partida partida) {
         this.partida = partida;
@@ -54,7 +55,7 @@ public class Trivia {
         actualizarMarcador();
 
         JScrollPane marcadorScrollPane = new JScrollPane(marcadorTextArea);
-        marcadorScrollPane.setBounds(900, 10, 250, 200);
+        marcadorScrollPane.setBounds(900, 500, 250, 200);
 
         //Ventana-------------------------------------------------------------------------------------------------------
         JFrame ventana = new JFrame("Trivia Quirk");
@@ -117,8 +118,11 @@ public class Trivia {
         ventana.add(respuestaLabel);
 
         siguiente.setVisible(false);
+        terminar.setVisible(false);
         siguiente.setBounds(10, 727, 100,30);
+        terminar.setBounds(230, 727, 100,30);
         ventana.add(siguiente);
+        ventana.add(terminar);
 
         //Acciones------------------------------------------------------------------------------------------------------
         timer = new Timer(1000, new ActionListener() {
@@ -151,6 +155,7 @@ public class Trivia {
                 respuestaB.setEnabled(false);
                 respuestaC.setEnabled(false);
                 siguiente.setVisible(true);
+                terminar.setVisible(true);
                 timer.stop();
 
                 byte valorSeleccionado = 1;
@@ -188,6 +193,7 @@ public class Trivia {
                 respuestaB.setEnabled(false);
                 respuestaC.setEnabled(false);
                 siguiente.setVisible(true);
+                terminar.setVisible(true);
                 timer.stop();
 
                 byte valorSeleccionado = 2;
@@ -225,6 +231,7 @@ public class Trivia {
                 respuestaB.setEnabled(false);
                 respuestaC.setEnabled(false);
                 siguiente.setVisible(true);
+                terminar.setVisible(true);
                 timer.stop();
 
 
@@ -267,10 +274,24 @@ public class Trivia {
                         throw new RuntimeException(ex);
                     }
                     MenuPrincipal.getInstance().setVisible(true);
-                    ventana.dispose();
+                    //ventana.dispose();
                 }
                 obtenerYMostrarNuevaPregunta();
                 siguiente.setVisible(false);
+            }
+        });
+
+        terminar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mostrarGanador();
+                try {
+                    categoria.finalizarPartida(partida.getNumeroPartida());
+                } catch (excepcionPartidaNoDisponible ex) {
+                    throw new RuntimeException(ex);
+                }
+                MenuPrincipal.getInstance().setVisible(true);
+                //ventana.dispose();
             }
         });
 
