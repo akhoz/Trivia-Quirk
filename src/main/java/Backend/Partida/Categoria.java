@@ -117,8 +117,9 @@ public class Categoria implements iCategorias {
             long semilla = System.currentTimeMillis();
             Random random = new Random(semilla);
 
+
             int numeroAleatorio;
-            for(numeroAleatorio = random.nextInt(numeroDeElementos); partida.getPreguntasRealizadas().contains(numeroAleatorio); numeroAleatorio = random.nextInt(numeroDeElementos)) {
+            for (numeroAleatorio = random.nextInt(numeroDeElementos); partida.getPreguntasRealizadas().contains(numeroAleatorio); numeroAleatorio = random.nextInt(numeroDeElementos)) {
             }
 
             partida.getPreguntasRealizadas().add(numeroAleatorio);
@@ -239,5 +240,14 @@ public class Categoria implements iCategorias {
             numeroDeElementos = elementos.length;
         }
         return (short)numeroDeElementos;
+    }
+
+    public Partida obtenerPartida(int numeroDePartida) {
+        for (Partida partida : this.partidasActivas) {
+            if (partida.getNumeroPartida() == numeroDePartida) {
+                return partida;
+            }
+        }
+        return this.partidasActivas.get(0);
     }
 }

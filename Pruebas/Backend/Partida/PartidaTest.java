@@ -78,4 +78,14 @@ class PartidaTest {
             Partida partida = new Partida(8);
             assertEquals("Partida 8", partida.toString());
     }
+
+    @Test
+    void limpiarPreguntasRealizadas() {
+        Partida partida = new Partida(1);
+        partida.getPreguntasRealizadas().add(1);
+        partida.getPreguntasRealizadas().add(2);
+        partida.getPreguntasRealizadas().add(3);
+        partida.limpiarPreguntasRealizadas();
+        assertEquals(0, partida.getPreguntasRealizadas().size());
+    }
 }

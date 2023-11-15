@@ -48,6 +48,7 @@ public class Registro extends JFrame {
         JButton confirmarCategorias = new JButton("Confirmar");
         JButton agregar = new JButton("Agregar");
         JButton regresar = new JButton("Regresar");
+        JButton jugar = new JButton("Jugar");
 
         //Implementacion------------------------------------------------------------------------------------------------
         cantidadJugadoresLabel.setBounds(10, 10, 200, 30);
@@ -64,6 +65,9 @@ public class Registro extends JFrame {
         ventana.add(confirmar);
 
         regresar.setBounds(5, 327, 100, 30);
+        jugar.setVisible(false);
+        jugar.setBounds(120, 327, 100, 30);
+        ventana.add(jugar);
         ventana.add(regresar);
 
         nombreJugadorLabel.setVisible(false);
@@ -227,7 +231,7 @@ public class Registro extends JFrame {
 
         agregar.addActionListener(e -> {
 
-            if (cantidadDeCategoriasaJugar > 1) {
+            if (cantidadDeCategoriasaJugar > 0) {
 
                 String input = categoriaTextField.getText().toLowerCase();
 
@@ -241,12 +245,21 @@ public class Registro extends JFrame {
                     categoria.appendCategoria(input);
                     --cantidadDeCategoriasaJugar;
                     categoriasRestantes.setText("Categorias restantes: " + cantidadDeCategoriasaJugar);
+
+                    if (cantidadDeCategoriasaJugar == 0) {
+                        agregar.setEnabled(false);
+                        categoriaTextField.setFocusable(false);
+                        jugar.setVisible(true);
+                    }
                 }
-            } else {
-                categoria.setCategoria(categoria.getCategorias().get(0));
-                new Trivia(categoria, partida);
-                ventana.dispose();
             }
+        });
+
+        jugar.addActionListener(e -> {
+            categoria.setCategoria(categoria.getCategorias().get(0));
+            new Trivia(categoria, partida);
+            System.out.println(categoria.getCategorias().size());
+            ventana.dispose();
         });
 
         regresar.addActionListener(e -> {

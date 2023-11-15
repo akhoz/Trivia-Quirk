@@ -27,6 +27,8 @@ public class Trivia {
     private int cantidadJugadores;
     private byte puntaje;
     private iPregunta pregunta;
+    private ArrayList<String> categorias = new ArrayList<>();
+    private int indiceCategorias = 1;
     private JTextArea marcadorTextArea;
 
     //Declaracion---------------------------------------------------------------------------------------------------
@@ -50,6 +52,7 @@ public class Trivia {
         this.categoria = categoria;
         this.cantidadJugadores = partida.getJugadores().size();
         this.nombreCategoria = categoria.nombreCategoria();
+        this.categorias = categoria.getCategorias();
 
         marcadorTextArea = new JTextArea();
         marcadorTextArea.setEditable(false);
@@ -270,19 +273,31 @@ public class Trivia {
         siguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (preguntasRestantes == 1) {
-                    mostrarGanador();
+                if (indiceCategorias != categorias.size() + 1) {
+                    if (preguntasRestantes == 1) {
+                        categoria.setCategoria(categorias.get(indiceCategorias));
+                        nombreCategoria = categorias.get(indiceCategorias);
+                        partida.limpiarPreguntasRealizadas();
+                        categoria.obtenerPartida(partida.getNumeroPartida()).limpiarPreguntasRealizadas();
+                        ++indiceCategorias;
+                        preguntasRestantes = 30;
+                        obtenerYMostrarNuevaPregunta();
+                        siguiente.setVisible(false);
+                    } else {
+                        categoria.setCategoria(nombreCategoria);
+                        obtenerYMostrarNuevaPregunta();
+                        siguiente.setVisible(false);
+                    }
+                } else {
+                    System.out.println(indiceCategorias);
                     try {
                         categoria.finalizarPartida(partida.getNumeroPartida());
                     } catch (excepcionPartidaNoDisponible ex) {
                         throw new RuntimeException(ex);
                     }
+                    mostrarGanador();
                     MenuPrincipal.getInstance().setVisible(true);
                     ventana.dispose();
-                } else {
-                    categoria.setCategoria(nombreCategoria);
-                    obtenerYMostrarNuevaPregunta();
-                    siguiente.setVisible(false);
                 }
             }
         });

@@ -52,4 +52,8 @@ public class Partida {
         return String.format("Partida %d", this.numeroPartida, this.preguntasRealizadas, this.jugadores);
     }
 
+    public void limpiarPreguntasRealizadas() {
+        this.preguntasRealizadas.clear();
+    }
+
 }
