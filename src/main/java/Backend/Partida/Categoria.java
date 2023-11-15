@@ -250,4 +250,8 @@ public class Categoria implements iCategorias {
         }
         return this.partidasActivas.get(0);
     }
+
+    public void limpiarCategorias() {
+        this.categorias.clear();
+    }
 }

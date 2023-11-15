@@ -53,6 +53,7 @@ public class Trivia {
         this.cantidadJugadores = partida.getJugadores().size();
         this.nombreCategoria = categoria.nombreCategoria();
         this.categorias = categoria.getCategorias();
+        categoria.limpiarCategorias();
 
         marcadorTextArea = new JTextArea();
         marcadorTextArea.setEditable(false);
@@ -273,8 +274,8 @@ public class Trivia {
         siguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (indiceCategorias != categorias.size() + 1) {
-                    if (preguntasRestantes == 1) {
+                if (preguntasRestantes == 1) {
+                    if (indiceCategorias < categorias.size()) {
                         categoria.setCategoria(categorias.get(indiceCategorias));
                         nombreCategoria = categorias.get(indiceCategorias);
                         partida.limpiarPreguntasRealizadas();
@@ -284,20 +285,21 @@ public class Trivia {
                         obtenerYMostrarNuevaPregunta();
                         siguiente.setVisible(false);
                     } else {
-                        categoria.setCategoria(nombreCategoria);
-                        obtenerYMostrarNuevaPregunta();
-                        siguiente.setVisible(false);
+                        System.out.println(indiceCategorias);
+                        try {
+                            categoria.finalizarPartida(partida.getNumeroPartida());
+                        } catch (excepcionPartidaNoDisponible ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        mostrarGanador();
+                        MenuPrincipal.getInstance().setVisible(true);
+                        ventana.dispose();
                     }
                 } else {
-                    System.out.println(indiceCategorias);
-                    try {
-                        categoria.finalizarPartida(partida.getNumeroPartida());
-                    } catch (excepcionPartidaNoDisponible ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    mostrarGanador();
-                    MenuPrincipal.getInstance().setVisible(true);
-                    ventana.dispose();
+                    categoria.setCategoria(nombreCategoria);
+                    obtenerYMostrarNuevaPregunta();
+                    siguiente.setVisible(false);
+
                 }
             }
         });

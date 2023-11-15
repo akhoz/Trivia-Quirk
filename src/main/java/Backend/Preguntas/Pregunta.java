@@ -5,7 +5,6 @@ import poo.proyecto2.triviaquirk.excepciones.excepcionRangoMayor;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Pregunta implements iPregunta{
     private final String descripcion;

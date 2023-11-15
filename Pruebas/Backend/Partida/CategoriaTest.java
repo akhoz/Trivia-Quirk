@@ -80,28 +80,6 @@ class CategoriaTest {
         });
     }
 
-    /*
-    @Test
-    void publicarEnSuscriptores() {
-        Categoria categoria = Categoria.getInstance();
-        int numeroPartida = categoria.registrarPartida();
-        iSuscriptorPreguntas suscriptor = new
-        assertDoesNotThrow(() -> {
-            categoria.agregarSuscriptor(numeroPartida, suscriptor);
-            categoria.publicarEnSuscriptores(numeroPartida);
-        });
-    }
-
-    @Test
-    void agregarSuscriptor() {
-        Categoria categoria = Categoria.getInstance();
-        iSuscriptorPreguntas suscriptor = new
-        int numeroPartida = categoria.registrarPartida();
-
-        assertDoesNotThrow(() -> categoria.agregarSuscriptor(numeroPartida, suscriptor));
-    }
-     */
-
     @Test
     void agregarJugador() throws excepcionPartidaNoDisponible {
         Categoria categoria = Categoria.getInstance();
@@ -123,4 +101,15 @@ class CategoriaTest {
         categoria.setCategoria("basket");
         assertEquals(30, categoria.cantidadDePreguntasExistentes());
     }
+
+    @Test
+    void limpiarCategorias() {
+        Categoria categoria = Categoria.getInstance();
+        categoria.appendCategoria("matematica");
+        categoria.appendCategoria("matematica2");
+        categoria.appendCategoria("matematica3");
+        categoria.limpiarCategorias();
+        assertEquals(0, categoria.getCategorias().size());
+    }
+
 }
