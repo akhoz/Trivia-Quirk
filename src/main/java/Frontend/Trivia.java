@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Trivia {
     private Categoria categoria;
@@ -276,11 +278,12 @@ public class Trivia {
                         throw new RuntimeException(ex);
                     }
                     MenuPrincipal.getInstance().setVisible(true);
-                    //ventana.dispose();
+                    ventana.dispose();
+                } else {
+                    categoria.setCategoria(nombreCategoria);
+                    obtenerYMostrarNuevaPregunta();
+                    siguiente.setVisible(false);
                 }
-                categoria.setCategoria(nombreCategoria);
-                obtenerYMostrarNuevaPregunta();
-                siguiente.setVisible(false);
             }
         });
 
@@ -358,24 +361,23 @@ public class Trivia {
     }
 
     private void mostrarGanador() {
-        iJugador ganador = null;
-        int puntajeMaximo = Integer.MIN_VALUE;
+        ArrayList<iJugador> jugadores = partida.getJugadores();
 
-        for (iJugador jugador : partida.getJugadores()) {
-            if (jugador.obtenerPuntaje() > puntajeMaximo) {
-                puntajeMaximo = jugador.obtenerPuntaje();
-                ganador = jugador;
-            } else if (jugador.obtenerPuntaje() == puntajeMaximo) {
-                ganador = null;
-            }
-        }
-
-        if (ganador == null) {
-            JOptionPane.showMessageDialog(null, "¡Hubo un empate!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
+        if (jugadores.size() == 1) {
+            JOptionPane.showMessageDialog(null, "Haz obtenido " + jugadores.get(0).obtenerPuntaje() + " puntos, felicidades!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        JOptionPane.showMessageDialog(null, "¡El ganador es: " + ganador.obtenerNombreJugador() +
-                " con un puntaje de " + puntajeMaximo + "!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
+        Collections.sort(jugadores, Comparator.comparingInt(iJugador::obtenerPuntaje).reversed());
+
+        StringBuilder mensaje = new StringBuilder("¡Orden de los jugadores por puntaje:\n");
+
+        for (int i = 0; i < jugadores.size(); i++) {
+            iJugador jugador = jugadores.get(i);
+            mensaje.append(i + 1).append(". ").append(jugador.obtenerNombreJugador())
+                    .append(" - Puntaje: ").append(jugador.obtenerPuntaje()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(null, mensaje.toString(), "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
     }
 }
