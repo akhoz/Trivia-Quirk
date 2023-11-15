@@ -8,6 +8,8 @@ import poo.proyecto2.triviaquirk.iJugador;
 import poo.proyecto2.triviaquirk.iPregunta;
 import poo.proyecto2.triviaquirk.iSuscriptorPreguntas;
 
+import java.util.stream.StreamSupport;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoriaTest {
@@ -28,6 +30,23 @@ class CategoriaTest {
         assertEquals("matematica", categoria.nombreCategoria());
     }
 
+    @Test
+    void appendCategoria() {
+        Categoria categoria = Categoria.getInstance();
+        categoria.getCategorias().clear();
+        categoria.appendCategoria("futbol");
+        categoria.appendCategoria("dragon");
+
+        assertEquals(2, categoria.getCategorias().size());
+    }
+
+    @Test
+    void getCategorias() {
+        Categoria categoria = Categoria.getInstance();
+        categoria.appendCategoria("futbol");
+        categoria.appendCategoria("dragon");
+        assertEquals("dragon", categoria.getCategorias().get(1));
+    }
     @Test
     void nombreCategoria() {
         Categoria categoria = Categoria.getInstance();

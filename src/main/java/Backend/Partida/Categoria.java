@@ -16,6 +16,7 @@ import java.util.Random;
 public class Categoria implements iCategorias {
     private String nombre;
     private final ArrayList<Partida> partidasActivas = new ArrayList();
+    private final ArrayList<String> categorias = new ArrayList<>();
     private static Categoria instancia;
 
     private Categoria() {
@@ -34,6 +35,13 @@ public class Categoria implements iCategorias {
         } else throw new IllegalArgumentException("La categoria no existe");
     }
 
+    public void appendCategoria(String nombre) {
+        this.categorias.add(nombre);
+    }
+
+    public ArrayList<String> getCategorias(){
+        return this.categorias;
+    }
     @Override
     public String nombreCategoria() {
         return this.nombre;
