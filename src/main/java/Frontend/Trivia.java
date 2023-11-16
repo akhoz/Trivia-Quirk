@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Trivia {
-    private Categoria categoria;
+    private Categoria categoriaRecibida;
     private String nombreCategoria;
     private Partida partida;
     private Timer timer;
@@ -27,7 +27,7 @@ public class Trivia {
     private int cantidadJugadores;
     private byte puntaje;
     private iPregunta pregunta;
-    private ArrayList<String> categorias = new ArrayList<>();
+    private ArrayList<String> categorias;
     private int indiceCategorias = 1;
     private JTextArea marcadorTextArea;
 
@@ -49,10 +49,10 @@ public class Trivia {
 
     public Trivia(Categoria categoria, Partida partida) {
         this.partida = partida;
-        this.categoria = categoria;
+        this.categoriaRecibida = categoria;
         this.cantidadJugadores = partida.getJugadores().size();
         this.nombreCategoria = categoria.nombreCategoria();
-        this.categorias = categoria.getCategorias();
+        this.categorias = new ArrayList<>(categoria.getCategorias());
         categoria.limpiarCategorias();
 
         marcadorTextArea = new JTextArea();
@@ -275,6 +275,10 @@ public class Trivia {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (preguntasRestantes == 1) {
+                    System.out.println("--------------------------------------------------");
+                    System.out.println(indiceCategorias);
+                    System.out.println(categorias.size());
+                    System.out.println("--------------------------------------------------");
                     if (indiceCategorias < categorias.size()) {
                         categoria.setCategoria(categorias.get(indiceCategorias));
                         nombreCategoria = categorias.get(indiceCategorias);
@@ -329,7 +333,7 @@ public class Trivia {
     private void obtenerYMostrarNuevaPregunta() {
 
         try {
-            pregunta = categoria.obtenerPreguntaAleatoria(partida.getNumeroPartida());
+            pregunta = categoriaRecibida.obtenerPreguntaAleatoria(partida.getNumeroPartida());
             preguntaLabel.setText(pregunta.obtenerDescripcion());
             respuestaA.setText(pregunta.obtenerRespuesta1());
             respuestaB.setText(pregunta.obtenerRespuesta2());
