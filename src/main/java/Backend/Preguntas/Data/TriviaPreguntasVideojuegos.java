@@ -44,6 +44,15 @@ public enum TriviaPreguntasVideojuegos {
     private String respuestaC;
     private byte respuestaCorrecta;
 
+    /**
+     * Constructor para la enumeración Basket que inicializa una pregunta de trivia.
+     *
+     * @param pregunta         La descripción de la pregunta.
+     * @param respuestaA          La primera opción de respuesta.
+     * @param respuestaB          La segunda opción de respuesta.
+     * @param respuestaC          La tercera opción de respuesta.
+     * @param respuestaCorrecta   El índice de la respuesta correcta (1 para A, 2 para B, 3 para C).
+     */
     private TriviaPreguntasVideojuegos(int numero, String pregunta, String respuestaA, String respuestaB, String respuestaC, byte respuestaCorrecta) {
         this.numero = numero;
         this.pregunta = pregunta;
@@ -53,28 +62,59 @@ public enum TriviaPreguntasVideojuegos {
         this.respuestaCorrecta = respuestaCorrecta;
     }
 
+    /**
+     * Obtiene el número de la pregunta.
+     *
+     * @return El número de la pregunta.
+     */
     public int getNumero() {
         return this.numero;
     }
 
+    /**
+     * Obtiene el texto de la pregunta.
+     *
+     * @return El texto de la pregunta.
+     */
     public String getPregunta() {
         return this.pregunta;
     }
 
+    /**
+     * Obtiene la primera opción de respuesta.
+     *
+     * @return La primera opción de respuesta.
+     */
     public String getRespuestaA() {
         return this.respuestaA;
     }
 
+    /**
+     * Obtiene la segunda opción de respuesta.
+     *
+     * @return La segunda opción de respuesta.
+     */
     public String getRespuestaB() {
         return this.respuestaB;
     }
 
+    /**
+     * Obtiene la tercera opción de respuesta.
+     *
+     * @return La tercera opción de respuesta.
+     */
     public String getRespuestaC() {
         return this.respuestaC;
     }
 
+    /**
+     * Obtiene el índice de la respuesta correcta (1 para A, 2 para B, 3 para C).
+     *
+     * @return El índice de la respuesta correcta.
+     */
     public byte getRespuestaCorrecta() {
         return this.respuestaCorrecta;
     }
+
 }
 

@@ -13,46 +13,97 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * La clase Categoria representa una categoría de preguntas en el juego Trivia Quirk.
+ * Cada instancia de esta clase se encarga de gestionar las partidas activas, las preguntas
+ * relacionadas con la categoría y proporcionar funcionalidades para la interacción con los jugadores
+ * y los suscriptores de preguntas.
+ */
 public class Categoria implements iCategorias {
+
+    /** El nombre de la categoría. */
     private String nombre;
+
+    /** Lista de partidas activas en la categoría. */
     private final ArrayList<Partida> partidasActivas = new ArrayList();
+
+    /** Lista de categorías disponibles. */
     private final ArrayList<String> categorias = new ArrayList<>();
+
+    /** Instancia única de la categoría (Singleton). */
     private static Categoria instancia;
 
+    /**
+     * Constructor privado para implementar el patrón Singleton.
+     */
     private Categoria() {
     }
 
-    public static Categoria getInstance() { //Implementacion del patron Singleton
+    /**
+     * Obtiene la instancia única de la categoría (Singleton).
+     *
+     * @return la instancia de la categoría
+     */
+    public static Categoria getInstance() {
         if (instancia == null) {
             instancia = new Categoria();
         }
         return instancia;
     }
 
+    /**
+     * Establece la categoría actual.
+     *
+     * @param nombre el nombre de la categoría
+     * @throws IllegalArgumentException si la categoría no existe
+     */
     public void setCategoria(String nombre) {
-        if (nombre.equals("matematica") || nombre.equals("futbol") || nombre.equals("basket") || nombre.equals("videojuegos")) { //Esto asegura que el nombre de la categoria sea valido
+        if (nombre.equals("matematica") || nombre.equals("futbol") || nombre.equals("basket") || nombre.equals("videojuegos")) {
             this.nombre = nombre;
-        } else throw new IllegalArgumentException("La categoria no existe");
+        } else {
+            throw new IllegalArgumentException("La categoría no existe");
+        }
     }
 
+    /**
+     * Agrega una nueva categoría a la lista de categorías disponibles.
+     *
+     * @param nombre el nombre de la categoría a agregar
+     */
     public void appendCategoria(String nombre) {
         this.categorias.add(nombre);
     }
 
+    /**
+     * Obtiene la lista de categorías disponibles.
+     *
+     * @return la lista de categorías
+     */
     public ArrayList<String> getCategorias(){
         return this.categorias;
     }
+
+    /**
+     * Obtiene el nombre de la categoría.
+     *
+     * @return el nombre de la categoría
+     */
     @Override
     public String nombreCategoria() {
         return this.nombre;
     }
 
+    /**
+     * Registra una nueva partida y devuelve su número.
+     *
+     * @return el número de la nueva partida registrada
+     */
     @Override
     public int registrarPartida() {
         int nuevaPartida = 0;
 
-        for(int i = 0; i < this.partidasActivas.size(); ++i) {
-            int elemento = ((Partida)this.partidasActivas.get(i)).getNumeroPartida();
+        for (int i = 0; i < this.partidasActivas.size(); ++i) {
+            int elemento = this.partidasActivas.get(i).getNumeroPartida();
             if (elemento > nuevaPartida) {
                 nuevaPartida = elemento;
             }
@@ -63,12 +114,18 @@ public class Categoria implements iCategorias {
         return nuevaPartida;
     }
 
+    /**
+     * Finaliza una partida activa según su número.
+     *
+     * @param numeroPartida el número de la partida a finalizar
+     * @throws excepcionPartidaNoDisponible si la partida no está disponible
+     */
     @Override
     public void finalizarPartida(int numeroPartida) throws excepcionPartidaNoDisponible {
         boolean encontrada = false;
 
-        for(int i = 0; i < this.partidasActivas.size(); ++i) {
-            if (((Partida)this.partidasActivas.get(i)).getNumeroPartida() == numeroPartida) {
+        for (int i = 0; i < this.partidasActivas.size(); ++i) {
+            if (this.partidasActivas.get(i).getNumeroPartida() == numeroPartida) {
                 this.partidasActivas.remove(i);
                 encontrada = true;
                 break;
@@ -80,18 +137,25 @@ public class Categoria implements iCategorias {
         }
     }
 
+    /**
+     * Obtiene una pregunta aleatoria para la partida especificada.
+     *
+     * @param numeroPartida el número de la partida
+     * @return la pregunta aleatoria obtenida
+     * @throws excepcionPreguntasNoDisponibles si no hay preguntas disponibles
+     */
     @Override
     public iPregunta obtenerPreguntaAleatoria(int numeroPartida) throws excepcionPreguntasNoDisponibles {
         int numeroDeElementos;
 
-        //Aqui se verifica cual categoria es la que se esta jugando
+        // Verifica la categoría actual para determinar el tipo de preguntas disponibles
         if (this.nombre.equals("matematica")) {
             Matematica[] elementos = Matematica.values();
             numeroDeElementos = elementos.length;
         } else if (this.nombre.equals("futbol")) {
             Futbol[] elementos = Futbol.values();
             numeroDeElementos = elementos.length;
-        } else if (this.nombre.equals("basket")){
+        } else if (this.nombre.equals("basket")) {
             Basket[] elementos = Basket.values();
             numeroDeElementos = elementos.length;
         } else {
@@ -102,21 +166,20 @@ public class Categoria implements iCategorias {
         Partida partida = null;
 
         for (int i = 0; i < this.partidasActivas.size(); ++i) {
-            if (((Partida)this.partidasActivas.get(i)).getNumeroPartida() == numeroPartida) {
-                partida = (Partida)this.partidasActivas.get(i);
+            if (this.partidasActivas.get(i).getNumeroPartida() == numeroPartida) {
+                partida = this.partidasActivas.get(i);
                 break;
             }
         }
 
-        assert partida != null; //Si la partida es nula, se lanza una excepcion
+        assert partida != null; // Si la partida es nula, se lanza una excepción
 
-        //Si el numero de elementos es menor o igual al numero de preguntas realizadas, se lanza una excepcion
+        // Si el número de elementos es menor o igual al número de preguntas realizadas, se lanza una excepción
         if (numeroDeElementos <= partida.getPreguntasRealizadas().size()) {
             throw new excepcionPreguntasNoDisponibles();
         } else {
             long semilla = System.currentTimeMillis();
             Random random = new Random(semilla);
-
 
             int numeroAleatorio;
             for (numeroAleatorio = random.nextInt(numeroDeElementos); partida.getPreguntasRealizadas().contains(numeroAleatorio); numeroAleatorio = random.nextInt(numeroDeElementos)) {
@@ -124,7 +187,7 @@ public class Categoria implements iCategorias {
 
             partida.getPreguntasRealizadas().add(numeroAleatorio);
 
-            //Se obtiene la pregunta aleatoria dependiendo de la categoria
+            // Se obtiene la pregunta aleatoria dependiendo de la categoría
             if (this.nombre.equals("matematica")) {
                 Matematica[] preguntas = Matematica.values();
                 Matematica preguntaAleatoria = preguntas[numeroAleatorio];
@@ -169,13 +232,19 @@ public class Categoria implements iCategorias {
         }
     }
 
+    /**
+     * Publica el puntaje en los suscriptores de la partida especificada.
+     *
+     * @param numeroPartida el número de la partida
+     * @throws excepcionPartidaNoDisponible si la partida no está disponible
+     */
     @Override
     public void publicarEnSuscriptores(int numeroPartida) throws excepcionPartidaNoDisponible {
         Partida partida = null;
 
-        for(int i = 0; i < this.partidasActivas.size(); ++i) {
-            if (((Partida)this.partidasActivas.get(i)).getNumeroPartida() == numeroPartida) {
-                partida = (Partida)this.partidasActivas.get(i);
+        for (int i = 0; i < this.partidasActivas.size(); ++i) {
+            if (this.partidasActivas.get(i).getNumeroPartida() == numeroPartida) {
+                partida = this.partidasActivas.get(i);
                 break;
             }
         }
@@ -185,13 +254,21 @@ public class Categoria implements iCategorias {
         } else {
             Iterator var5 = partida.getListadoSuscriptores().iterator();
 
-            while(var5.hasNext()) {
-                iSuscriptorPreguntas suscriptor = (iSuscriptorPreguntas)var5.next();
+            while (var5.hasNext()) {
+                iSuscriptorPreguntas suscriptor = (iSuscriptorPreguntas) var5.next();
                 suscriptor.publicarPuntaje(partida.getJugadores());
             }
-
         }
     }
+
+
+    /**
+     * Agrega un suscriptor a la partida especificada.
+     *
+     * @param numeroPartida el número de la partida
+     * @param sp el suscriptor de preguntas a agregar
+     * @throws excepcionPartidaNoDisponible si la partida no está disponible
+     */
 
     public void agregarSuscriptor(int numeroPartida, iSuscriptorPreguntas sp) throws excepcionPartidaNoDisponible {
         Partida partida = null;
@@ -210,6 +287,13 @@ public class Categoria implements iCategorias {
         }
     }
 
+    /**
+     * Agrega un jugador a la partida especificada.
+     *
+     * @param numeroPartida el número de la partida
+     * @param jugador el jugador a agregar
+     * @throws excepcionPartidaNoDisponible si la partida no está disponible
+     */
     public void agregarJugador(int numeroPartida, iJugador jugador) throws excepcionPartidaNoDisponible {
         Partida partida = null;
 
@@ -227,6 +311,11 @@ public class Categoria implements iCategorias {
         }
     }
 
+    /**
+     * Obtiene la cantidad de preguntas existentes en la categoría.
+     *
+     * @return la cantidad de preguntas existentes
+     */
     public short cantidadDePreguntasExistentes() {
         int numeroDeElementos;
         if (this.nombre == "matematica") {
@@ -242,6 +331,12 @@ public class Categoria implements iCategorias {
         return (short)numeroDeElementos;
     }
 
+    /**
+     * Obtiene la partida activa con el número especificado.
+     *
+     * @param numeroDePartida el número de la partida
+     * @return la partida activa o la primera partida si no se encuentra
+     */
     public Partida obtenerPartida(int numeroDePartida) {
         for (Partida partida : this.partidasActivas) {
             if (partida.getNumeroPartida() == numeroDePartida) {
@@ -251,6 +346,9 @@ public class Categoria implements iCategorias {
         return this.partidasActivas.get(0);
     }
 
+    /**
+     * Limpia la lista de categorías disponibles.
+     */
     public void limpiarCategorias() {
         this.categorias.clear();
     }

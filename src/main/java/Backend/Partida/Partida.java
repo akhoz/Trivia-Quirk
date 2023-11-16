@@ -1,10 +1,13 @@
 package Backend.Partida;
 
-import Backend.Preguntas.Pregunta;
 import poo.proyecto2.triviaquirk.iSuscriptorPreguntas;
 import poo.proyecto2.triviaquirk.iJugador;
 
 import java.util.ArrayList;
+
+/**
+ * Clase que representa una partida en el juego.
+ */
 public class Partida {
 
     private int numeroPartida;
@@ -12,48 +15,98 @@ public class Partida {
     public final ArrayList<iSuscriptorPreguntas> listadoSuscriptores;
     private final ArrayList<iJugador> jugadores;
 
-    public Partida(int numeroPartida){
+    /**
+     * Constructor de la clase Partida.
+     *
+     * @param numeroPartida el número de la partida
+     */
+    public Partida(int numeroPartida) {
         this.numeroPartida = numeroPartida;
-        this.preguntasRealizadas = new ArrayList<Integer>();
-        this.listadoSuscriptores = new ArrayList<iSuscriptorPreguntas>();
+        this.preguntasRealizadas = new ArrayList<>();
+        this.listadoSuscriptores = new ArrayList<>();
         this.jugadores = new ArrayList<>();
     }
 
-    public int getNumeroPartida(){
+    /**
+     * Obtiene el número de la partida.
+     *
+     * @return el número de la partida
+     */
+    public int getNumeroPartida() {
         return this.numeroPartida;
     }
 
+    /**
+     * Obtiene la lista de suscriptores de la partida.
+     *
+     * @return la lista de suscriptores
+     */
     public ArrayList<iSuscriptorPreguntas> getListadoSuscriptores() {
         return this.listadoSuscriptores;
     }
+
+    /**
+     * Agrega un suscriptor a la lista de suscriptores.
+     *
+     * @param suscriptor el suscriptor a agregar
+     */
     public void addSuscriptor(iSuscriptorPreguntas suscriptor) {
         this.listadoSuscriptores.add(suscriptor);
     }
-    public ArrayList<Integer> getPreguntasRealizadas(){
+
+    /**
+     * Obtiene la lista de preguntas realizadas en la partida.
+     *
+     * @return la lista de preguntas realizadas
+     */
+    public ArrayList<Integer> getPreguntasRealizadas() {
         return this.preguntasRealizadas;
     }
 
-    public ArrayList<iJugador> getJugadores(){
+    /**
+     * Obtiene la lista de jugadores de la partida.
+     *
+     * @return la lista de jugadores
+     */
+    public ArrayList<iJugador> getJugadores() {
         return this.jugadores;
     }
-    public ArrayList<String> getNombreJugadores(){
+
+    /**
+     * Obtiene la lista de nombres de los jugadores de la partida.
+     *
+     * @return la lista de nombres de jugadores
+     */
+    public ArrayList<String> getNombreJugadores() {
         ArrayList<String> nombreJugadores = new ArrayList<>();
-        for (iJugador jugador : this.jugadores){
+        for (iJugador jugador : this.jugadores) {
             nombreJugadores.add(jugador.obtenerNombreJugador());
         }
         return nombreJugadores;
     }
 
-    public void agregarJugador(iJugador jugador){
+    /**
+     * Agrega un jugador a la lista de jugadores.
+     *
+     * @param jugador el jugador a agregar
+     */
+    public void agregarJugador(iJugador jugador) {
         this.jugadores.add(jugador);
     }
 
-    public String toString(){
-        return String.format("Partida %d", this.numeroPartida, this.preguntasRealizadas, this.jugadores);
+    /**
+     * Retorna una representación en cadena de la partida.
+     *
+     * @return una cadena que representa la partida
+     */
+    public String toString() {
+        return String.format("Partida %d", this.numeroPartida);
     }
 
+    /**
+     * Limpia la lista de preguntas realizadas en la partida.
+     */
     public void limpiarPreguntasRealizadas() {
         this.preguntasRealizadas.clear();
     }
-
 }

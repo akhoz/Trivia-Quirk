@@ -12,8 +12,14 @@ import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase de prueba para la clase Categoria.
+ */
 class CategoriaTest {
 
+    /**
+     * Prueba para verificar si getInstance devuelve la misma instancia.
+     */
     @Test
     void getInstance() {
         Categoria categoria1 = Categoria.getInstance();
@@ -23,6 +29,9 @@ class CategoriaTest {
         assertSame(categoria1, categoria2);
     }
 
+    /**
+     * Prueba para verificar si setCategoria establece correctamente el nombre de la categoría.
+     */
     @Test
     void setCategoria() {
         Categoria categoria = Categoria.getInstance();
@@ -30,6 +39,9 @@ class CategoriaTest {
         assertEquals("matematica", categoria.nombreCategoria());
     }
 
+    /**
+     * Prueba para verificar si appendCategoria agrega categorías correctamente.
+     */
     @Test
     void appendCategoria() {
         Categoria categoria = Categoria.getInstance();
@@ -40,6 +52,9 @@ class CategoriaTest {
         assertEquals(2, categoria.getCategorias().size());
     }
 
+    /**
+     * Prueba para verificar si getCategorias devuelve la categoría correcta.
+     */
     @Test
     void getCategorias() {
         Categoria categoria = Categoria.getInstance();
@@ -47,6 +62,10 @@ class CategoriaTest {
         categoria.appendCategoria("dragon");
         assertEquals("dragon", categoria.getCategorias().get(1));
     }
+
+    /**
+     * Prueba para verificar si nombreCategoria devuelve el nombre correcto de la categoría.
+     */
     @Test
     void nombreCategoria() {
         Categoria categoria = Categoria.getInstance();
@@ -54,6 +73,9 @@ class CategoriaTest {
         assertEquals("futbol", categoria.nombreCategoria());
     }
 
+    /**
+     * Prueba para verificar si registrarPartida devuelve un número de partida válido.
+     */
     @Test
     void registrarPartida() {
         Categoria categoria = Categoria.getInstance();
@@ -61,6 +83,9 @@ class CategoriaTest {
         assertTrue(numeroPartida > 0);
     }
 
+    /**
+     * Prueba para verificar si finalizarPartida no arroja excepciones.
+     */
     @Test
     void finalizarPartida() {
         Categoria categoria = Categoria.getInstance();
@@ -68,6 +93,9 @@ class CategoriaTest {
         assertDoesNotThrow(() -> categoria.finalizarPartida(numeroPartida));
     }
 
+    /**
+     * Prueba para verificar si obtenerPreguntaAleatoria no arroja excepciones y devuelve una pregunta no nula.
+     */
     @Test
     void obtenerPreguntaAleatoria() {
         Categoria categoria = Categoria.getInstance();
@@ -80,17 +108,22 @@ class CategoriaTest {
         });
     }
 
+    /**
+     * Prueba para verificar si agregarJugador no arroja excepciones.
+     */
     @Test
     void agregarJugador() throws excepcionPartidaNoDisponible {
         Categoria categoria = Categoria.getInstance();
-        Jugador jugador = new Jugador("Pepito") {
-        };
+        Jugador jugador = new Jugador("Pepito") {};
         int numeroPartida = categoria.registrarPartida();
         categoria.agregarJugador(numeroPartida, jugador);
 
         assertDoesNotThrow(() -> categoria.agregarJugador(numeroPartida, jugador));
     }
 
+    /**
+     * Prueba para verificar si cantidadDePreguntasExistentes devuelve el número correcto de preguntas para diferentes categorías.
+     */
     @Test
     void cantidadDePreguntasExistentes() throws excepcionPreguntasNoDisponibles {
         Categoria categoria = Categoria.getInstance();
@@ -102,6 +135,9 @@ class CategoriaTest {
         assertEquals(30, categoria.cantidadDePreguntasExistentes());
     }
 
+    /**
+     * Prueba para verificar si limpiarCategorias borra las categorías correctamente.
+     */
     @Test
     void limpiarCategorias() {
         Categoria categoria = Categoria.getInstance();
@@ -111,5 +147,4 @@ class CategoriaTest {
         categoria.limpiarCategorias();
         assertEquals(0, categoria.getCategorias().size());
     }
-
 }

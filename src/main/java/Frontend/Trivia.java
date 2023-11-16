@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * La clase Trivia, encargada de realizar el juego de trivia.
+ */
 public class Trivia {
     private Categoria categoriaRecibida;
     private String nombreCategoria;
@@ -133,6 +136,9 @@ public class Trivia {
         ventana.add(terminar);
 
         //Acciones------------------------------------------------------------------------------------------------------
+        /**
+         * Inicializa y comienza el temporizador para el tiempo de respuesta.
+         */
         timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 segundosRestantes--;
@@ -145,9 +151,7 @@ public class Trivia {
                     puntaje = 0;
                     try {
                         pregunta.esCorrecta(puntaje);
-                    } catch (excepcionRangoMayor ex) {
-                        throw new RuntimeException(ex);
-                    } catch (FileNotFoundException ex) {
+                    } catch (excepcionRangoMayor | FileNotFoundException ex) {
                         throw new RuntimeException(ex);
                     }
                     timer.stop();
@@ -156,6 +160,9 @@ public class Trivia {
         });
         timer.start();
 
+        /**
+         * Configura la acción realizada al hacer clic en la opción de respuesta A.
+         */
         respuestaA.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -179,21 +186,21 @@ public class Trivia {
                         respuestaLabel.setVisible(true);
                         actualizarMarcador();
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
-
                     } else {
                         respuestaLabel.setText("Respuesta incorrecta");
                         respuestaLabel.setVisible(true);
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
                     }
 
-                } catch (excepcionRangoMayor e1) {
+                } catch (excepcionRangoMayor | FileNotFoundException e1) {
                     e1.printStackTrace();
-                } catch (FileNotFoundException e2) {
-                    e2.printStackTrace();
                 }
             }
         });
 
+        /**
+         * Configura la acción realizada al hacer clic en la opción de respuesta B.
+         */
         respuestaB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -217,21 +224,21 @@ public class Trivia {
                         respuestaLabel.setVisible(true);
                         actualizarMarcador();
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
-
                     } else {
                         respuestaLabel.setText("Respuesta incorrecta");
                         respuestaLabel.setVisible(true);
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
                     }
 
-                } catch (excepcionRangoMayor e1) {
+                } catch (excepcionRangoMayor | FileNotFoundException e1) {
                     e1.printStackTrace();
-                } catch (FileNotFoundException e2) {
-                    e2.printStackTrace();
                 }
             }
         });
 
+        /**
+         * Configura la acción realizada al hacer clic en la opción de respuesta C.
+         */
         respuestaC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -241,7 +248,6 @@ public class Trivia {
                 siguiente.setVisible(true);
                 terminar.setVisible(true);
                 timer.stop();
-
 
                 byte valorSeleccionado = 3;
                 System.out.println(pregunta.obtenerDescripcion() + " respuesta seleccionada: " + valorSeleccionado);
@@ -256,21 +262,21 @@ public class Trivia {
                         respuestaLabel.setVisible(true);
                         actualizarMarcador();
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
-
                     } else {
                         respuestaLabel.setText("Respuesta incorrecta");
                         respuestaLabel.setVisible(true);
                         //VOLVER A OBTENER PREGUNTA ALEATORIA
                     }
 
-                } catch (excepcionRangoMayor e1) {
+                } catch (excepcionRangoMayor | FileNotFoundException e1) {
                     e1.printStackTrace();
-                } catch (FileNotFoundException e2) {
-                    e2.printStackTrace();
                 }
             }
         });
 
+        /**
+         * Configura la acción realizada al hacer clic en el botón "Siguiente" para avanzar a la siguiente pregunta.
+         */
         siguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -303,11 +309,13 @@ public class Trivia {
                     categoria.setCategoria(nombreCategoria);
                     obtenerYMostrarNuevaPregunta();
                     siguiente.setVisible(false);
-
                 }
             }
         });
 
+        /**
+         * Configura la acción realizada al hacer clic en el botón "Terminar" para finalizar la partida.
+         */
         terminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -322,6 +330,7 @@ public class Trivia {
             }
         });
 
+
         //Ventana------------------------------------------------------------------------------------------------------
         ventana.setLayout(null);
         ventana.setLocationRelativeTo(null);
@@ -330,8 +339,12 @@ public class Trivia {
 
     }
 
+    /**
+     * Obtiene y muestra una nueva pregunta aleatoria para la partida actual.
+     * Actualiza la interfaz gráfica con la descripción y opciones de respuesta de la nueva pregunta,
+     * inicia el temporizador y realiza las configuraciones necesarias para el próximo turno.
+     */
     private void obtenerYMostrarNuevaPregunta() {
-
         try {
             pregunta = categoriaRecibida.obtenerPreguntaAleatoria(partida.getNumeroPartida());
             preguntaLabel.setText(pregunta.obtenerDescripcion());
@@ -362,14 +375,15 @@ public class Trivia {
             turnoLabel.setText("Turno de: " + partida.getNombreJugadores().get(indiceJugadores));
             System.out.println("Turno de: " + partida.getNombreJugadores().get(indiceJugadores));
 
-
         } catch (excepcionPreguntasNoDisponibles e) {
             JOptionPane.showMessageDialog(null, "Se produjo un error al obtener la nueva pregunta");
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * Actualiza el marcador mostrando el puntaje actual de cada jugador en la interfaz gráfica.
+     */
     private void actualizarMarcador() {
         ArrayList<iJugador> jugadores = partida.getJugadores();
         StringBuilder marcadorText = new StringBuilder("Marcador Actual:\n");
@@ -381,14 +395,20 @@ public class Trivia {
         marcadorTextArea.setText(marcadorText.toString());
     }
 
+    /**
+     * Muestra el resultado final del juego, incluyendo el orden de los jugadores por puntaje.
+     * En caso de un solo jugador, muestra un mensaje de felicitaciones.
+     */
     private void mostrarGanador() {
         ArrayList<iJugador> jugadores = partida.getJugadores();
 
         if (jugadores.size() == 1) {
-            JOptionPane.showMessageDialog(null, "Haz obtenido " + jugadores.get(0).obtenerPuntaje() + " puntos, felicidades!", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Haz obtenido " + jugadores.get(0).obtenerPuntaje() + " puntos, felicidades!",
+                    "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
+        // Ordena la lista de jugadores por puntaje de mayor a menor.
         Collections.sort(jugadores, Comparator.comparingInt(iJugador::obtenerPuntaje).reversed());
 
         StringBuilder mensaje = new StringBuilder("¡Orden de los jugadores por puntaje:\n");

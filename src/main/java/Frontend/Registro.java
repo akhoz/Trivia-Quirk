@@ -9,6 +9,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
+
+/**
+ * La clase Registro, encargada de registrar a los jugadores y decidir cuantas categorias jugaran
+ */
 public class Registro extends JFrame {
 
     private int cantidad;
@@ -134,6 +138,11 @@ public class Registro extends JFrame {
         categoriasRestantes.setFont(fuente);
         ventana.add(categoriasRestantes);
         //Acciones------------------------------------------------------------------------------------------------------
+        /**
+         * Acción realizada al hacer clic en el botón "Confirmar" para la cantidad de jugadores.
+         *
+         * @param e Evento de acción.
+         */
         confirmar.addActionListener(e -> {
             String input = cantidadJugadores.getText();
 
@@ -165,6 +174,11 @@ public class Registro extends JFrame {
             }
         });
 
+        /**
+         * Acción realizada al hacer clic en el botón "Registrar" para el registro de jugadores.
+         *
+         * @param e Evento de acción.
+         */
         registrar.addActionListener(e -> {
             String input = nombreJugador.getText();
 
@@ -206,12 +220,17 @@ public class Registro extends JFrame {
             }
         });
 
+        /**
+         * Acción realizada al hacer clic en el botón "Confirmar Categorías" para la cantidad de categorías.
+         *
+         * @param e Evento de acción.
+         */
         confirmarCategorias.addActionListener(e -> {
             String input = cantidadCategorias.getText();
 
             try {
                 cantidadDeCategoriasaJugar = Integer.parseInt(input);
-                System.out.println("Cantidad de categorias: " + cantidadDeCategoriasaJugar);
+                System.out.println("Cantidad de categorías: " + cantidadDeCategoriasaJugar);
 
                 if (cantidadDeCategoriasaJugar > 0) {
                     categoriaLabel.setVisible(true);
@@ -224,11 +243,16 @@ public class Registro extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Ingrese un número mayor a 0");
                 }
-            }  catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Ingrese un valor numérico válido");
             }
         });
 
+        /**
+         * Acción realizada al hacer clic en el botón "Agregar" para la adición de categorías.
+         *
+         * @param e Evento de acción.
+         */
         agregar.addActionListener(e -> {
 
             if (cantidadDeCategoriasaJugar > 0) {
@@ -236,9 +260,9 @@ public class Registro extends JFrame {
                 String input = categoriaTextField.getText().toLowerCase();
 
                 if (input.equals("categoria") || input.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Ingrese la categoria");
+                    JOptionPane.showMessageDialog(null, "Ingrese la categoría");
                 } else if (!input.equals("futbol") && !input.equals("basket") && !input.equals("matematica") && !input.equals("videojuegos")) {
-                    JOptionPane.showMessageDialog(null, "Ingrese una categoria válida");
+                    JOptionPane.showMessageDialog(null, "Ingrese una categoría válida");
                 } else {
                     setPlaceholder(categoriaTextField, "Categoria");
                     System.out.println("Categoria seleccionada: " +  input);
@@ -255,6 +279,11 @@ public class Registro extends JFrame {
             }
         });
 
+        /**
+         * Acción realizada al hacer clic en el botón "Jugar" para iniciar la partida.
+         *
+         * @param e Evento de acción.
+         */
         jugar.addActionListener(e -> {
             categoria.setCategoria(categoria.getCategorias().get(0));
             new Trivia(categoria, partida);
@@ -262,6 +291,11 @@ public class Registro extends JFrame {
             ventana.dispose();
         });
 
+        /**
+         * Acción realizada al hacer clic en el botón "Regresar" para volver a la ventana principal.
+         *
+         * @param e Evento de acción.
+         */
         regresar.addActionListener(e -> {
             System.out.println("Regresando a la ventana principal");
             ventana.dispose();
@@ -276,6 +310,13 @@ public class Registro extends JFrame {
         ventana.setResizable(false);
     }
 
+
+    /**
+     * Método para establecer un placeholder en un campo de texto.
+     *
+     * @param textField  Campo de texto al que se le aplicará el placeholder.
+     * @param placeholder Texto del placeholder.
+     */
     private void setPlaceholder(JTextField textField, String placeholder) {
         textField.setText(placeholder);
         textField.setForeground(Color.GRAY);

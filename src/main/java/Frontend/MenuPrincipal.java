@@ -3,10 +3,17 @@ package Frontend;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * La clase MenuPrincipal representa la ventana del menú principal de la aplicación Trivia Quirk.
+ * Utiliza el patrón Singleton para garantizar una única instancia de la ventana.
+ */
 public class MenuPrincipal extends JFrame {
 
-    private static MenuPrincipal instancia; //Singleton
+    private static MenuPrincipal instancia; // Singleton
 
+    /**
+     * Constructor privado para evitar instancias externas.
+     */
     private MenuPrincipal() {
         JPanel panel = new JPanel(new BorderLayout());
         JPanel panelBotones = new JPanel(new FlowLayout());
@@ -27,7 +34,6 @@ public class MenuPrincipal extends JFrame {
         });
 
         titulo.setFont(fuente);
-
         titulo.setHorizontalAlignment(JLabel.CENTER);
 
         panel.add(titulo, BorderLayout.NORTH);
@@ -47,7 +53,12 @@ public class MenuPrincipal extends JFrame {
         setResizable(false);
     }
 
-    public static MenuPrincipal getInstance() { //Implementacion del patron Singleton
+    /**
+     * Obtiene la única instancia de la clase MenuPrincipal utilizando el patrón Singleton.
+     *
+     * @return La instancia única de MenuPrincipal.
+     */
+    public static MenuPrincipal getInstance() {
         if (instancia == null) {
             instancia = new MenuPrincipal();
         }

@@ -38,6 +38,15 @@ public enum Basket {
     private final ArrayList<String> respuestas = new ArrayList<>();
     private final byte respuestaCorrecta;
 
+    /**
+     * Constructor para la enumeración Basket que inicializa una pregunta de trivia.
+     *
+     * @param descripcion         La descripción de la pregunta.
+     * @param respuestaA          La primera opción de respuesta.
+     * @param respuestaB          La segunda opción de respuesta.
+     * @param respuestaC          La tercera opción de respuesta.
+     * @param respuestaCorrecta   El índice de la respuesta correcta (1 para A, 2 para B, 3 para C).
+     */
     Basket(String descripcion, String respuestaA, String respuestaB, String respuestaC, byte respuestaCorrecta) {
         this.descripcion = descripcion;
         this.respuestas.add(respuestaA);
@@ -46,22 +55,42 @@ public enum Basket {
         this.respuestaCorrecta = respuestaCorrecta;
     }
 
+    /**
+     * Obtiene la descripción de la pregunta.
+     * @return La descripción de la pregunta.
+     */
     public String getDescripcion() {
         return this.descripcion;
     }
 
+    /**
+     * Obtiene la primera opción de respuesta.
+     * @return La primera opción de respuesta.
+     */
     public String getRespuestaA() {
         return this.respuestas.get(0);
     }
 
+    /**
+     * Obtiene la segunda opción de respuesta.
+     * @return La segunda opción de respuesta.
+     */
     public String getRespuestaB() {
         return this.respuestas.get(1);
     }
 
+    /**
+     * Obtiene la tercera opción de respuesta.
+     * @return La tercera opción de respuesta.
+     */
     public String getRespuestaC() {
         return this.respuestas.get(2);
     }
 
+    /**
+     * Obtiene el índice de la respuesta correcta.
+     * @return El índice de la respuesta correcta.
+     */
     public byte getRespuestaCorrecta() {
         return this.respuestaCorrecta;
     }
